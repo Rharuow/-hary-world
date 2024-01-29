@@ -1,11 +1,14 @@
 import {
   BadRequestException,
   Controller,
+  ForbiddenException,
   Get,
   HttpException,
   HttpStatus,
+  UseFilters,
 } from '@nestjs/common';
 import { CustomException } from './custom.exception';
+import { HttpExceptionFilter } from './http-exception.filter';
 
 @Controller('errors')
 export class ErrorsController {
@@ -45,5 +48,11 @@ export class ErrorsController {
       cause: new Error(),
       description: 'Some error description',
     });
+  }
+
+  @Get('/custom-filter')
+  @UseFilters(new HttpExceptionFilter())
+  async getCustomFilter() {
+    throw new ForbiddenException();
   }
 }
