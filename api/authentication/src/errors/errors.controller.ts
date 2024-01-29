@@ -1,4 +1,5 @@
 import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
+import { CustomException } from './custom.exception';
 
 @Controller('errors')
 export class ErrorsController {
@@ -25,5 +26,10 @@ export class ErrorsController {
   @Get('/404')
   async notFound() {
     throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+  }
+
+  @Get('/custom')
+  async getCustomException() {
+    throw new CustomException();
   }
 }
