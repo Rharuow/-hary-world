@@ -1,4 +1,10 @@
-import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  BadRequestException,
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { CustomException } from './custom.exception';
 
 @Controller('errors')
@@ -31,5 +37,13 @@ export class ErrorsController {
   @Get('/custom')
   async getCustomException() {
     throw new CustomException();
+  }
+
+  @Get('/built-in')
+  async builtIn() {
+    throw new BadRequestException('Something bad happened', {
+      cause: new Error(),
+      description: 'Some error description',
+    });
   }
 }
