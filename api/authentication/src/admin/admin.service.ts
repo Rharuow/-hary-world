@@ -54,7 +54,7 @@ export class AdminService {
 
   async getAdmin(id: string) {
     try {
-      return await this.prisma.user.findUnique({
+      return await this.prisma.user.findUniqueOrThrow({
         where: { id },
         include: { admin: true, role: true },
       });

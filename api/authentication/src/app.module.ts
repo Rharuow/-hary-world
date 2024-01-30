@@ -7,6 +7,7 @@ import { ClientService } from './client/client.service';
 import { UserController } from './user/user.controller';
 import { AdminController } from './admin/admin.controller';
 import { UserService } from './user/user.service';
+import { Seed } from './utils/seed';
 
 @Module({
   imports: [],
@@ -19,4 +20,13 @@ import { UserService } from './user/user.service';
     UserService,
   ],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private readonly prismaService: PrismaService) {
+    this.runSeeds();
+  }
+  async runSeeds() {
+    const seed = new Seed(this.prismaService);
+    await seed.createDefaultRoles();
+    await seed.createRootUser();
+  }
+}
