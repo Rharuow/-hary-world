@@ -33,6 +33,9 @@ export class UserController {
   @Delete('/:id')
   async deleteUser(@Param() params: { id: string }) {
     try {
+      const isRootUser = await this.userService.findUser(params.id);
+      if (isRootUser && isRootUser.role.name === 'ROOT')
+        throw new Error('Root user cannot be deleted');
       return await this.userService.deleteUser(params.id);
     } catch (error) {
       throw new HttpException(
