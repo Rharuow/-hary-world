@@ -7,7 +7,7 @@ export class UserService {
 
   async listUsers() {
     try {
-      return await this.prisma.user.findMany();
+      return await this.prisma.user.findMany({ include: { role: true } });
     } catch (error) {
       throw new Error(error);
     }

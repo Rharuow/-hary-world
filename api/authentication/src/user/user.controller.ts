@@ -15,7 +15,7 @@ export class UserController {
   @Get()
   async listUsers() {
     try {
-      await this.userService.listUsers();
+      return await this.userService.listUsers();
     } catch (error) {
       throw new HttpException(
         {
@@ -33,7 +33,7 @@ export class UserController {
   @Delete('/:id')
   async deleteUser(@Param() params: { id: string }) {
     try {
-      await this.userService.deleteUser(params.id);
+      return await this.userService.deleteUser(params.id);
     } catch (error) {
       throw new HttpException(
         {
