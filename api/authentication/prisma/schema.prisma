@@ -34,7 +34,7 @@ model User {
   password    String
   roleId      String
   role        Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
-  adminId     String? @unique @map("adminId")
+  adminId     String? @unique
   admin       Admin?
   clientId    String? @unique
   client      Client?
