@@ -16,7 +16,8 @@ export class AdminController {
 
   @Post()
   async createAdmin(
-    @Body() data: Prisma.AdminCreateInput & Prisma.UserCreateInput,
+    @Body()
+    data: Prisma.AdminCreateInput & Prisma.UserCreateInput & { roleId: string },
   ) {
     try {
       await this.adminService.createAdmin(data);
@@ -24,7 +25,7 @@ export class AdminController {
       throw new HttpException(
         {
           status: HttpStatus.UNPROCESSABLE_ENTITY,
-          error: 'Something went wrong',
+          error: error.message,
         },
         HttpStatus.UNPROCESSABLE_ENTITY,
         {

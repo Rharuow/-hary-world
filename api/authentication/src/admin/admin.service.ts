@@ -7,13 +7,15 @@ import { Prisma } from '@prisma/client';
 export class AdminService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async createAdmin(data: Prisma.AdminCreateInput & Prisma.UserCreateInput) {
+  async createAdmin(
+    data: Prisma.AdminCreateInput & Prisma.UserCreateInput & { roleId: string },
+  ) {
     try {
       return await this.prisma.user.create({
         data: {
           name: data.name,
           password: encodeSha256(data.password),
-          role: data.role,
+          roleId: data.roleId,
           admin: {
             create: {
               ...(data.email && { email: data.email }),
