@@ -4,11 +4,12 @@ import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 
 @Injectable()
-export class AdminService {
+export class ClientService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async createAdmin(
-    data: Prisma.AdminCreateInput & Prisma.UserCreateInput & { roleId: string },
+  async createClient(
+    data: Prisma.ClientCreateInput &
+      Prisma.UserCreateInput & { roleId: string },
   ) {
     try {
       return await this.prisma.user.create({
@@ -16,7 +17,7 @@ export class AdminService {
           name: data.name,
           password: encodeSha256(data.password),
           roleId: data.roleId,
-          admin: {
+          client: {
             create: {
               ...(data.email && { email: data.email }),
               ...(data.phone && { phone: data.phone }),
@@ -29,33 +30,33 @@ export class AdminService {
     }
   }
 
-  async getAdmin({ adminId, id }: { id: string; adminId: string }) {
+  async getClient({ clientId, id }: { id: string; clientId: string }) {
     try {
       return await this.prisma.user.findUniqueOrThrow({
-        where: { id, AND: { admin: { id: adminId } } },
+        where: { id, AND: { client: { id: clientId } } },
         select: {
           name: true,
           id: true,
-          admin: { select: { id: true, phone: true, email: true } },
+          client: { select: { id: true, phone: true, email: true } },
           role: { select: { id: true, name: true } },
         },
-        // include: { admin: true, role: true },
+        // include: { client: true, role: true },
       });
     } catch (error) {
       throw new Error(error);
     }
   }
 
-  async listAdmin() {
+  async listClient() {
     try {
       return await this.prisma.user.findMany({
         where: {
-          role: { name: 'ADMIN' },
+          role: { name: 'CLIENT' },
         },
         select: {
           name: true,
           id: true,
-          admin: {
+          client: {
             select: {
               id: true,
               phone: true,
@@ -69,24 +70,24 @@ export class AdminService {
     }
   }
 
-  async updateAdmin({
-    adminId,
+  async updateClient({
+    clientId,
     data,
     id,
   }: {
-    data: Prisma.UserUpdateInput & { admin: Prisma.AdminUpdateInput };
+    data: Prisma.UserUpdateInput & { client: Prisma.ClientUpdateInput };
     id: string;
-    adminId: string;
+    clientId: string;
   }) {
-    const { admin, ...user } = data;
+    const { client, ...user } = data;
     try {
       return await this.prisma.user.update({
-        where: { id, AND: { admin: { id: adminId } } },
+        where: { id, AND: { client: { id: clientId } } },
         data: {
           ...user,
-          admin: {
+          client: {
             update: {
-              data: admin,
+              data: client,
             },
           },
         },
