@@ -38,7 +38,7 @@ export class AdminController {
   @Get('/:id')
   async getAdmin(@Param() params: { id: string }) {
     try {
-      await this.adminService.getAdmin(params.id);
+      return await this.adminService.getAdmin(params.id);
     } catch (error) {
       throw new HttpException(
         {
