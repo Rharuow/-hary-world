@@ -8,8 +8,17 @@ export class UserService {
   async listUsers() {
     try {
       return await this.prisma.user.findMany({
-        include: { role: true },
         where: { NOT: { role: { name: 'ROOT' } } },
+        select: {
+          id: true,
+          name: true,
+          role: {
+            select: {
+              name: true,
+              id: true,
+            },
+          },
+        },
       });
     } catch (error) {
       throw new Error(error);
@@ -30,8 +39,15 @@ export class UserService {
     try {
       return await this.prisma.user.findUnique({
         where: { id },
-        include: {
-          role: true,
+        select: {
+          name: true,
+          id: true,
+          role: {
+            select: {
+              name: true,
+              id: true,
+            },
+          },
         },
       });
     } catch (error) {

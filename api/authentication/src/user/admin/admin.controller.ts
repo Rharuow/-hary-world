@@ -35,6 +35,24 @@ export class AdminController {
     }
   }
 
+  @Get('/admins')
+  async listAdmin() {
+    try {
+      return await this.adminService.listAdmin();
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_FOUND,
+          error: 'Resource not found',
+        },
+        HttpStatus.NOT_FOUND,
+        {
+          cause: error,
+        },
+      );
+    }
+  }
+
   @Get('/:id/admins/:adminId')
   async getAdmin(@Param() { adminId, id }: { id: string; adminId: string }) {
     try {
@@ -43,7 +61,7 @@ export class AdminController {
       throw new HttpException(
         {
           status: HttpStatus.NOT_FOUND,
-          error: 'Resource not found',
+          error: error.message,
         },
         HttpStatus.NOT_FOUND,
         {

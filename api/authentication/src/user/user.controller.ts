@@ -30,6 +30,24 @@ export class UserController {
     }
   }
 
+  @Get('/:id')
+  async findUser(@Param() { id }: { id: string }) {
+    try {
+      return await this.userService.findUser(id);
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_FOUND,
+          error: error.message,
+        },
+        HttpStatus.NOT_FOUND,
+        {
+          cause: error,
+        },
+      );
+    }
+  }
+
   @Delete('/:id')
   async deleteUser(@Param() params: { id: string }) {
     try {

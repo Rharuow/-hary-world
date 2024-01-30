@@ -53,10 +53,42 @@ export class AdminService {
   }
 
   async getAdmin({ adminId, id }: { id: string; adminId: string }) {
+    console.warn('adminId', adminId);
+    console.warn('id', id);
+
     try {
       return await this.prisma.user.findUniqueOrThrow({
-        where: { id, AND: { adminId } },
-        include: { admin: true, role: true },
+        where: { id, AND: { admin: { id: adminId } } },
+        select: {
+          name: true,
+          id: true,
+          admin: { select: { id: true, phone: true, email: true } },
+          role: { select: { id: true, name: true } },
+        },
+        // include: { admin: true, role: true },
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  async listAdmin() {
+    try {
+      return await this.prisma.user.findMany({
+        where: {
+          role: { name: 'ADMIN' },
+        },
+        select: {
+          name: true,
+          id: true,
+          admin: {
+            select: {
+              id: true,
+              phone: true,
+              email: true,
+            },
+          },
+        },
       });
     } catch (error) {
       throw new Error(error);
