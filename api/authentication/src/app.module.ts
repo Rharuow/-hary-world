@@ -2,23 +2,13 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaService } from './prisma/prisma.service';
-import { AdminService } from './admin/admin.service';
-import { ClientService } from './client/client.service';
-import { UserController } from './user/user.controller';
-import { AdminController } from './admin/admin.controller';
-import { UserService } from './user/user.service';
 import { Seed } from './utils/seed';
+import { UserModule } from './user/user.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController, UserController, AdminController],
-  providers: [
-    AppService,
-    PrismaService,
-    AdminService,
-    ClientService,
-    UserService,
-  ],
+  imports: [UserModule],
+  controllers: [AppController],
+  providers: [AppService, PrismaService],
 })
 export class AppModule {
   constructor(private readonly prismaService: PrismaService) {

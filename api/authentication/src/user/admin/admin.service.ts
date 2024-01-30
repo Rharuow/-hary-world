@@ -52,10 +52,10 @@ export class AdminService {
     };
   }
 
-  async getAdmin(id: string) {
+  async getAdmin({ adminId, id }: { id: string; adminId: string }) {
     try {
       return await this.prisma.user.findUniqueOrThrow({
-        where: { id },
+        where: { id, AND: { adminId } },
         include: { admin: true, role: true },
       });
     } catch (error) {
