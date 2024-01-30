@@ -53,9 +53,6 @@ export class AdminService {
   }
 
   async getAdmin({ adminId, id }: { id: string; adminId: string }) {
-    console.warn('adminId', adminId);
-    console.warn('id', id);
-
     try {
       return await this.prisma.user.findUniqueOrThrow({
         where: { id, AND: { admin: { id: adminId } } },
@@ -86,6 +83,33 @@ export class AdminService {
               id: true,
               phone: true,
               email: true,
+            },
+          },
+        },
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  async updateAdmin({
+    adminId,
+    data,
+    id,
+  }: {
+    data: Prisma.UserUpdateInput & { admin: Prisma.AdminUpdateInput };
+    id: string;
+    adminId: string;
+  }) {
+    const { admin, ...user } = data;
+    try {
+      return await this.prisma.user.update({
+        where: { id, AND: { admin: { id: adminId } } },
+        data: {
+          ...user,
+          admin: {
+            update: {
+              data: admin,
             },
           },
         },
