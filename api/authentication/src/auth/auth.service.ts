@@ -2,6 +2,7 @@ import { encodeSha256 } from '@/libs/bcrypt';
 import { UserService } from '@/user/user.service';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+// import { ROLE } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -27,5 +28,23 @@ export class AuthService {
     return {
       access_token: await this.jwtService.signAsync(payload),
     };
+  }
+
+  async getProfile({ token }: { token: string }) {
+    try {
+      // const user: {
+      //   name: string;
+      //   password: string;
+      //   id: string;
+      //   role: {
+      //     name: ROLE;
+      //     id: string;
+      //   };
+      // } = await this.jwtService.verifyAsync(token);
+
+      return await this.jwtService.verifyAsync(token);
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 }
