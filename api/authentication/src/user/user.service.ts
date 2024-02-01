@@ -3,22 +3,26 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class UserService {
+  private readonly selectScope = {
+    select: {
+      name: true,
+      id: true,
+      role: {
+        select: {
+          name: true,
+          id: true,
+        },
+      },
+    },
+  };
   constructor(private readonly prisma: PrismaService) {}
 
-  async listUsers() {
+  async listUsers(password?: boolean) {
+    const select = { ...this.selectScope.select, password };
     try {
       return await this.prisma.user.findMany({
         where: { NOT: { role: { name: 'ROOT' } } },
-        select: {
-          id: true,
-          name: true,
-          role: {
-            select: {
-              name: true,
-              id: true,
-            },
-          },
-        },
+        select,
       });
     } catch (error) {
       throw new Error(error);
@@ -35,20 +39,24 @@ export class UserService {
     }
   }
 
-  async findUser(id: string) {
+  async findUser(id: string, password?: boolean) {
+    const select = { ...this.selectScope.select, password };
     try {
       return await this.prisma.user.findUnique({
         where: { id },
-        select: {
-          name: true,
-          id: true,
-          role: {
-            select: {
-              name: true,
-              id: true,
-            },
-          },
-        },
+        select,
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  async findUserByName(name: string, password?: boolean) {
+    const select = { ...this.selectScope.select, password };
+    try {
+      return await this.prisma.user.findUniqueOrThrow({
+        where: { name },
+        select,
       });
     } catch (error) {
       throw new Error(error);
