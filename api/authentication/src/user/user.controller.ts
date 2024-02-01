@@ -33,6 +33,7 @@ export class UserController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Get('/:id')
   async findUser(@Param() { id }: { id: string }) {
     try {
