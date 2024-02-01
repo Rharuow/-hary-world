@@ -42,6 +42,7 @@ export class AdminController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Get('/admins')
   async listAdmin() {
     try {
