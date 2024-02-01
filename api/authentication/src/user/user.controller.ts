@@ -5,16 +5,13 @@ import {
   HttpException,
   HttpStatus,
   Param,
-  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { AuthGuard } from '@/auth/auth.guard';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @UseGuards(AuthGuard)
   @Get()
   async listUsers() {
     try {
@@ -33,7 +30,6 @@ export class UserController {
     }
   }
 
-  @UseGuards(AuthGuard)
   @Get('/:id')
   async findUser(@Param() { id }: { id: string }) {
     try {
@@ -52,7 +48,6 @@ export class UserController {
     }
   }
 
-  @UseGuards(AuthGuard)
   @Delete('/:id')
   async deleteUser(@Param() params: { id: string }) {
     try {

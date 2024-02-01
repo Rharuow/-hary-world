@@ -8,17 +8,14 @@ import {
   Param,
   Post,
   Put,
-  UseGuards,
 } from '@nestjs/common';
 import { ClientService } from './client.service';
 import { Prisma } from '@prisma/client';
-import { AuthGuard } from '@/auth/auth.guard';
 
 @Controller('users')
 export class ClientController {
   constructor(private readonly clientService: ClientService) {}
 
-  @UseGuards(AuthGuard)
   @Post('/clients')
   @HttpCode(204)
   async createClient(
@@ -43,7 +40,6 @@ export class ClientController {
     }
   }
 
-  @UseGuards(AuthGuard)
   @Get('/clients')
   async listClient() {
     try {
@@ -62,7 +58,6 @@ export class ClientController {
     }
   }
 
-  @UseGuards(AuthGuard)
   @Get('/:id/clients/:clientId')
   async getClient(@Param() { clientId, id }: { id: string; clientId: string }) {
     try {
@@ -81,7 +76,6 @@ export class ClientController {
     }
   }
 
-  @UseGuards(AuthGuard)
   @Put('/:id/clients/:clientId')
   @HttpCode(204)
   async updateClient(

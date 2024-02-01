@@ -8,17 +8,14 @@ import {
   Param,
   Post,
   Put,
-  UseGuards,
 } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { Prisma } from '@prisma/client';
-import { AuthGuard } from '@/auth/auth.guard';
 
 @Controller('users')
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
-  @UseGuards(AuthGuard)
   @Post('/admins')
   @HttpCode(204)
   async createAdmin(
@@ -42,7 +39,6 @@ export class AdminController {
     }
   }
 
-  @UseGuards(AuthGuard)
   @Get('/admins')
   async listAdmin() {
     try {
@@ -61,7 +57,6 @@ export class AdminController {
     }
   }
 
-  @UseGuards(AuthGuard)
   @Get('/:id/admins/:adminId')
   async getAdmin(@Param() { adminId, id }: { id: string; adminId: string }) {
     try {
@@ -80,7 +75,6 @@ export class AdminController {
     }
   }
 
-  @UseGuards(AuthGuard)
   @Put('/:id/admins/:adminId')
   @HttpCode(204)
   async updateAdmin(
