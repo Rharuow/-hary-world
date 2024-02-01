@@ -2,6 +2,7 @@ import { encodeSha256 } from '@/libs/bcrypt';
 import { UserService } from '@/user/user.service';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { ROLE } from '@prisma/client';
 // import { ROLE } from '@prisma/client';
 
 @Injectable()
@@ -32,15 +33,26 @@ export class AuthService {
 
   async getProfile({ token }: { token: string }) {
     try {
-      // const user: {
-      //   name: string;
-      //   password: string;
-      //   id: string;
-      //   role: {
-      //     name: ROLE;
-      //     id: string;
-      //   };
-      // } = await this.jwtService.verifyAsync(token);
+      const user: {
+        name: string;
+        password: string;
+        id: string;
+        role: {
+          name: ROLE;
+          id: string;
+        };
+      } = await this.jwtService.verifyAsync(token);
+
+      if (user.role.name !== 'ROOT')
+        return await this.userService.findUserByName(
+          user.name,
+          false,
+          user.role.name === 'CLIENT'
+            ? {
+                client: { select: { email: true, phone: true } },
+              }
+            : { admin: { select: { email: true, phone: true } } },
+        );
 
       return await this.jwtService.verifyAsync(token);
     } catch (error) {

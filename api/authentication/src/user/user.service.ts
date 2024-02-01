@@ -51,8 +51,8 @@ export class UserService {
     }
   }
 
-  async findUserByName(name: string, password?: boolean) {
-    const select = { ...this.selectScope.select, password };
+  async findUserByName(name: string, password?: boolean, fileds?: object) {
+    const select = { ...this.selectScope.select, password, ...fileds };
     try {
       return await this.prisma.user.findUniqueOrThrow({
         where: { name },
