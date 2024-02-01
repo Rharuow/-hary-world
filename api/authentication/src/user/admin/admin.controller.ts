@@ -8,14 +8,17 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { Prisma } from '@prisma/client';
+import { AuthGuard } from '@/auth/auth.guard';
 
 @Controller('users')
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
+  @UseGuards(AuthGuard)
   @Post('/admins')
   @HttpCode(204)
   async createAdmin(
