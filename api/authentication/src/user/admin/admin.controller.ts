@@ -61,6 +61,7 @@ export class AdminController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Get('/:id/admins/:adminId')
   async getAdmin(@Param() { adminId, id }: { id: string; adminId: string }) {
     try {
@@ -79,6 +80,7 @@ export class AdminController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Put('/:id/admins/:adminId')
   @HttpCode(204)
   async updateAdmin(
