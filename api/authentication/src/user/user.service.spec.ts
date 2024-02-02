@@ -48,6 +48,25 @@ describe('UserService', () => {
       jest.spyOn(service, 'findUser').mockImplementation(async () => result);
 
       expect(result).toBeDefined();
+
+  describe('findUserByName', () => {
+    it('should return a specific user', async () => {
+      const result = await service.findUserByName(user.name);
+      jest
+        .spyOn(service, 'findUserByName')
+        .mockImplementation(async () => result);
+
+      expect(result).toBeDefined();
+    });
+
+    it('should return a specific user contained password attribute', async () => {
+      const result = await service.findUserByName(user.name, true);
+      jest
+        .spyOn(service, 'findUserByName')
+        .mockImplementation(async () => result);
+
+      expect(result).toBeDefined();
+      expect(result).toHaveProperty('password', result?.password);
     });
   });
 
