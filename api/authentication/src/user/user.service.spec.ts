@@ -84,8 +84,12 @@ describe('UserService', () => {
       });
       const result = await service.deleteUser(userCreatedToDelete.id);
       jest.spyOn(service, 'deleteUser').mockImplementation(async () => result);
+      const userDeleted = await prismaService.user.findUnique({
+        where: { id: userCreatedToDelete.id },
+      });
 
       expect(result).toBeDefined();
+      expect(userDeleted).toBeNull();
     });
   });
 });
