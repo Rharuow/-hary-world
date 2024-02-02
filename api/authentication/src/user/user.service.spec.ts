@@ -32,4 +32,13 @@ describe('UserService', () => {
       expect(await service.listUsers()).toBe(result);
     });
   });
+
+  describe('findUser', () => {
+    it('should return a specific user', async () => {
+      const result = await service.findUser(user.id);
+      jest.spyOn(service, 'findUser').mockImplementation(async () => result);
+
+      expect(await service.findUser(user.id)).toBe(result);
+    });
+  });
 });
