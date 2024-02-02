@@ -9,6 +9,7 @@ describe('UserService', () => {
     User & { role: Pick<Role, 'name' | 'id'> },
     'id' | 'name' | 'role'
   >;
+  let prismaService: PrismaService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -16,6 +17,7 @@ describe('UserService', () => {
     }).compile();
 
     service = module.get<UserService>(UserService);
+    prismaService = module.get<PrismaService>(PrismaService);
   });
 
   it('should be defined', () => {
@@ -39,6 +41,22 @@ describe('UserService', () => {
       jest.spyOn(service, 'findUser').mockImplementation(async () => result);
 
       expect(await service.findUser(user.id)).toBe(result);
+    });
+  });
+
+  describe('deleteUser', () => {
+    it('should delete and return a specific user', async () => {
+      const userCreatedToDelete = await prismaService.user.create({
+        data: {
+          name: 'User created to delete',
+          password: '123',
+          roleId: user.role.id,
+        },
+      });
+      const result = await service.deleteUser(userCreatedToDelete.id);
+      jest.spyOn(service, 'deleteUser').mockImplementation(async () => result);
+
+      expect(await service.deleteUser(userCreatedToDelete.id)).toBe(result);
     });
   });
 });
