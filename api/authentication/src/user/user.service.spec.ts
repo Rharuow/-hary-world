@@ -42,6 +42,17 @@ describe('UserService', () => {
 
       expect(await service.findUser(user.id)).toBe(result);
     });
+
+    it('should return a specific user contained password attribute', async () => {
+      const result = await service.findUser(user.id, true);
+      jest.spyOn(service, 'findUser').mockImplementation(async () => result);
+
+      expect(await service.findUser(user.id)).toBe(result);
+      expect(await service.findUser(user.id)).toHaveProperty(
+        'password',
+        result?.password,
+      );
+    });
   });
 
   describe('deleteUser', () => {
