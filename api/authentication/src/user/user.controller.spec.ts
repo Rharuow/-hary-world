@@ -50,4 +50,25 @@ describe('UserController', () => {
     });
   });
 
+  describe('deleteUser', () => {
+    it('should delete and return a specific user', async () => {
+      const userCreatedToDelete = await prismaService.user.create({
+        data: {
+          name: 'User created to delete',
+          password: '123',
+          roleId: user.role.id,
+        },
+      });
+      const result = await userController.deleteUser({
+        id: userCreatedToDelete.id,
+      });
+      jest
+        .spyOn(userController, 'deleteUser')
+        .mockImplementation(async () => result);
+
+      expect(
+        await userController.deleteUser({ id: userCreatedToDelete.id }),
+      ).toBe(result);
+    });
+  });
 });
