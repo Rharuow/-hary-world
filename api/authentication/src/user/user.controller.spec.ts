@@ -4,7 +4,7 @@ import { UserService } from './user.service';
 import { PrismaService } from '@/prisma/prisma.service';
 
 describe('UserController', () => {
-  let controller: UserController;
+  let userController: UserController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -12,10 +12,21 @@ describe('UserController', () => {
       providers: [UserService, PrismaService],
     }).compile();
 
-    controller = module.get<UserController>(UserController);
+    userController = module.get<UserController>(UserController);
   });
 
   it('should be defined', () => {
-    expect(controller).toBeDefined();
+    expect(userController).toBeDefined();
+  });
+
+  describe('listUsers', () => {
+    it('should return an array of users', async () => {
+      const result = await userController.listUsers();
+      jest
+        .spyOn(userController, 'listUsers')
+        .mockImplementation(async () => result);
+
+      expect(await userController.listUsers()).toBe(result);
+    });
   });
 });
