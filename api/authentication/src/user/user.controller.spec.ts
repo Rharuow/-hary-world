@@ -33,7 +33,21 @@ describe('UserController', () => {
         .spyOn(userController, 'listUsers')
         .mockImplementation(async () => result);
 
+      user = result[0];
+
       expect(await userController.listUsers()).toBe(result);
     });
   });
+
+  describe('findUser', () => {
+    it('should return a specific user', async () => {
+      const result = await userController.findUser({ id: user.id });
+      jest
+        .spyOn(userController, 'findUser')
+        .mockImplementation(async () => result);
+
+      expect(await userController.findUser({ id: user.id })).toBe(result);
+    });
+  });
+
 });
