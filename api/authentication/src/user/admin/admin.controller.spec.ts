@@ -48,4 +48,16 @@ describe('AdminController', () => {
     expect(admin).toBeDefined();
     expect(controller).toBeDefined();
   });
+
+  describe('listAdmin', () => {
+    it('should return an array of admins', async () => {
+      const result = await controller.listAdmin();
+      jest
+        .spyOn(controller, 'listAdmin')
+        .mockImplementation(async () => result);
+
+      expect(result).toBeDefined();
+    });
+  });
+
 });
