@@ -9,6 +9,14 @@ describe('AdminController', () => {
   let prismaService: PrismaService;
   let admin: Prisma.UserGetPayload<{ include: { admin: true; role: true } }>;
 
+  afterAll(async () => {
+    await prismaService.user.delete({
+      where: {
+        id: admin.id,
+      },
+    });
+  });
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AdminController],
