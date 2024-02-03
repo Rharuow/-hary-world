@@ -1,7 +1,18 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from './user.service';
 import { PrismaService } from '@/prisma/prisma.service';
-import { Role, User } from '@prisma/client';
+import { ROLE, Role, User } from '@prisma/client';
+
+type UserWithCreatedAt = {
+  role: {
+    name: ROLE;
+    id: string;
+  };
+  name: string;
+  id: string;
+  password: string;
+  createdAt: string;
+};
 
 describe('UserService', () => {
   let service: UserService;
@@ -70,6 +81,20 @@ describe('UserService', () => {
 
       expect(result).toBeDefined();
       expect(result).toHaveProperty('password', result?.password);
+    });
+
+    it('should return a specific user without password attribute and ', async () => {
+      const result = (await service.findUserByName(user.name, true, {
+        createdAt: true,
+      })) as UserWithCreatedAt;
+
+      jest
+        .spyOn(service, 'findUserByName')
+        .mockImplementation(async () => result);
+
+      expect(result).toBeDefined();
+      expect(result).toHaveProperty('password', result?.password);
+      expect(result).toHaveProperty('createdAt', result?.createdAt);
     });
   });
 
