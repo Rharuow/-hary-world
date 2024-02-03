@@ -22,7 +22,18 @@ describe('UserController', () => {
     prismaService = module.get<PrismaService>(PrismaService);
   });
 
-  it('should be defined', () => {
+  it('should be defined', async () => {
+    const role = await prismaService.role.findUnique({
+      where: { name: 'ADMIN' },
+    });
+    user = await prismaService.user.create({
+      data: {
+        name: 'User test',
+        password: '123',
+        roleId: String(role?.id),
+      },
+      include: { role: true },
+    });
     expect(userController).toBeDefined();
   });
 
@@ -32,8 +43,6 @@ describe('UserController', () => {
       jest
         .spyOn(userController, 'listUsers')
         .mockImplementation(async () => result);
-
-      user = result[0];
 
       expect(result).toBeDefined();
     });
@@ -52,15 +61,8 @@ describe('UserController', () => {
 
   describe('deleteUser', () => {
     it('should delete and return a specific user', async () => {
-      const userCreatedToDelete = await prismaService.user.create({
-        data: {
-          name: 'User created to delete',
-          password: '123',
-          roleId: user.role.id,
-        },
-      });
       const result = await userController.deleteUser({
-        id: userCreatedToDelete.id,
+        id: user.id,
       });
       jest
         .spyOn(userController, 'deleteUser')

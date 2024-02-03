@@ -31,7 +31,18 @@ describe('UserService', () => {
     prismaService = module.get<PrismaService>(PrismaService);
   });
 
-  it('should be defined', () => {
+  it('should be defined', async () => {
+    const role = await prismaService.role.findUnique({
+      where: { name: 'ADMIN' },
+    });
+    user = await prismaService.user.create({
+      data: {
+        name: 'User test',
+        password: '123',
+        roleId: String(role?.id),
+      },
+      include: { role: true },
+    });
     expect(service).toBeDefined();
   });
 
@@ -39,8 +50,6 @@ describe('UserService', () => {
     it('should return an array of users', async () => {
       const result = await service.listUsers();
       jest.spyOn(service, 'listUsers').mockImplementation(async () => result);
-
-      user = result[0];
 
       expect(result).toBeDefined();
     });
