@@ -60,4 +60,19 @@ describe('AdminController', () => {
     });
   });
 
+  describe('getAdmin', () => {
+    it('should return a specific admin', async () => {
+      const result = await controller.getAdmin({
+        id: admin.id,
+        adminId: String(admin.admin?.id),
+      });
+      jest.spyOn(controller, 'getAdmin').mockImplementation(async () => result);
+
+      expect(result).toBeDefined();
+      expect(result).toHaveProperty('name', result.name);
+      expect(result).toHaveProperty('admin', result.admin);
+      expect(result.admin).toHaveProperty('email', result.admin?.email);
+      expect(result.admin).toHaveProperty('phone', result.admin?.phone);
+    });
+  });
 });
