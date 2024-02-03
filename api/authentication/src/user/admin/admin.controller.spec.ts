@@ -36,6 +36,12 @@ describe('AdminController', () => {
         name: 'Admin test',
         password: '123',
         roleId: String(role?.id),
+        admin: {
+          create: {
+            email: 'admin@example.com',
+            phone: '123',
+          },
+        },
       },
       include: { role: true, admin: true },
     });
