@@ -37,7 +37,7 @@ describe('UserService', () => {
     });
     user = await prismaService.user.create({
       data: {
-        name: 'User test',
+        name: 'User test service',
         password: '123',
         roleId: String(role?.id),
       },
@@ -109,17 +109,10 @@ describe('UserService', () => {
 
   describe('deleteUser', () => {
     it('should delete and return a specific user', async () => {
-      const userCreatedToDelete = await prismaService.user.create({
-        data: {
-          name: 'User created to delete',
-          password: '123',
-          roleId: user.role.id,
-        },
-      });
-      const result = await service.deleteUser(userCreatedToDelete.id);
+      const result = await service.deleteUser(user.id);
       jest.spyOn(service, 'deleteUser').mockImplementation(async () => result);
       const userDeleted = await prismaService.user.findUnique({
-        where: { id: userCreatedToDelete.id },
+        where: { id: user.id },
       });
 
       expect(result).toBeDefined();

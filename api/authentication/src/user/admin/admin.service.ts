@@ -8,7 +8,8 @@ export class AdminService {
   constructor(private readonly prisma: PrismaService) {}
 
   async createAdmin(
-    data: Prisma.AdminCreateInput & Prisma.UserCreateInput & { roleId: string },
+    data: Omit<Prisma.AdminCreateInput, 'user'> &
+      Omit<Prisma.UserCreateInput, 'role'> & { roleId: string },
   ) {
     try {
       return await this.prisma.user.create({
@@ -74,25 +75,32 @@ export class AdminService {
     data,
     id,
   }: {
-    data: Prisma.UserUpdateInput & { admin: Prisma.AdminUpdateInput };
+    data: Prisma.UserUpdateInput & Omit<Prisma.AdminUpdateInput, 'user'>;
     id: string;
     adminId: string;
   }) {
-    const { admin, ...user } = data;
-    try {
-      return await this.prisma.user.update({
-        where: { id, AND: { admin: { id: adminId } } },
-        data: {
-          ...user,
-          admin: {
-            update: {
-              data: admin,
-            },
-          },
-        },
-      });
-    } catch (error) {
-      throw new Error(error);
-    }
+    const { ...user }: Prisma.UserUpdateInput = data;
+    const { ...admin }: Prisma.AdminUpdateInput = data;
+
+    console.log('user = ', user);
+    console.log('admin = ', admin);
+
+    // try {
+    //   return await this.prisma.user.update({
+    //     where: { id, AND: { admin: { id: adminId } } },
+    //     data: {
+    //       ...(user && user),
+    //       ...(admin && {
+    //         admin: {
+    //           update: {
+    //             data: admin,
+    //           },
+    //         },
+    //       }),
+    //     },
+    //   });
+    // } catch (error) {
+    //   throw new Error(error);
+    // }
   }
 }

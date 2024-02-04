@@ -20,7 +20,8 @@ export class AdminController {
   @HttpCode(204)
   async createAdmin(
     @Body()
-    data: Prisma.AdminCreateInput & Prisma.UserCreateInput & { roleId: string },
+    data: Omit<Prisma.AdminCreateInput, 'user'> &
+      Omit<Prisma.UserCreateInput, 'role'> & { roleId: string },
   ) {
     try {
       await this.adminService.createAdmin(data);
@@ -79,7 +80,8 @@ export class AdminController {
   @HttpCode(204)
   async updateAdmin(
     @Param() { adminId, id }: { id: string; adminId: string },
-    @Body() data: Prisma.UserUpdateInput & { admin: Prisma.AdminUpdateInput },
+    @Body()
+    data: Prisma.UserUpdateInput & Omit<Prisma.AdminUpdateInput, 'user'>,
   ) {
     try {
       await this.adminService.updateAdmin({ adminId, id, data });

@@ -2,12 +2,13 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AdminController } from './admin.controller';
 import { AdminService } from './admin.service';
 import { PrismaService } from '@/prisma/prisma.service';
-import { Prisma } from '@prisma/client';
+import { Prisma, Role } from '@prisma/client';
 
 describe('AdminController', () => {
   let controller: AdminController;
   let prismaService: PrismaService;
   let admin: Prisma.UserGetPayload<{ include: { admin: true; role: true } }>;
+  let role: Role | null;
 
   afterAll(async () => {
     await prismaService.user.delete({
@@ -28,25 +29,33 @@ describe('AdminController', () => {
   });
 
   it('should be defined', async () => {
-    const role = await prismaService.role.findUnique({
+    role = await prismaService.role.findUnique({
       where: { name: 'ADMIN' },
     });
-    admin = await prismaService.user.create({
-      data: {
-        name: 'Admin test',
+    expect(controller).toBeDefined();
+  });
+
+  describe('createAdmin', () => {
+    it('should create a user admin', async () => {
+      await controller.createAdmin({
+        name: 'admin test',
         password: '123',
         roleId: String(role?.id),
-        admin: {
-          create: {
-            email: 'admin@example.com',
-            phone: '123',
-          },
-        },
-      },
-      include: { role: true, admin: true },
+        email: 'admin@example.com',
+        phone: '123',
+      });
+
+      admin = (await prismaService.user.findUnique({
+        where: { name: 'admin test' },
+        include: { admin: true, role: true },
+      })) as Prisma.UserGetPayload<{ include: { admin: true; role: true } }>;
+
+      jest.spyOn(controller, 'createAdmin').mockImplementation(async () => {});
+
+      expect(admin).toBeDefined();
+      expect(admin).toHaveProperty('name', admin.name);
+      expect(admin).toHaveProperty('password', admin.password);
     });
-    expect(admin).toBeDefined();
-    expect(controller).toBeDefined();
   });
 
   describe('listAdmin', () => {
@@ -57,6 +66,7 @@ describe('AdminController', () => {
         .mockImplementation(async () => result);
 
       expect(result).toBeDefined();
+      expect(result).toHaveProperty('length', result.length);
     });
   });
 
@@ -73,6 +83,45 @@ describe('AdminController', () => {
       expect(result).toHaveProperty('admin', result.admin);
       expect(result.admin).toHaveProperty('email', result.admin?.email);
       expect(result.admin).toHaveProperty('phone', result.admin?.phone);
+    });
+  });
+
+  describe('updateAdmin', () => {
+    it('should update a specific admin', async () => {
+      await controller.updateAdmin(
+        {
+          adminId: String(admin.admin?.id),
+          id: admin.id,
+        },
+        { name: 'Admin test edited' },
+      );
+
+      const result = await controller.getAdmin({
+        id: admin.id,
+        adminId: String(admin.admin?.id),
+      });
+
+      expect(result).toBeDefined();
+      expect(result).toHaveProperty('name', 'Admin test edited');
+    });
+
+    it('should update a specific admin', async () => {
+      await controller.updateAdmin(
+        {
+          adminId: String(admin.admin?.id),
+          id: admin.id,
+        },
+        { email: 'adminedited@gmai.com' },
+      );
+
+      const result = await controller.getAdmin({
+        id: admin.id,
+        adminId: String(admin.admin?.id),
+      });
+
+      expect(result).toBeDefined();
+      expect(result.admin).toBeDefined();
+      expect(result.admin).toHaveProperty('email', 'adminedited@gmai.com');
     });
   });
 });
