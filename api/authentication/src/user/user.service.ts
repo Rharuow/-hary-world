@@ -72,11 +72,20 @@ export class UserService {
 
   async findUserByName(name: string, password?: boolean, fields?: object) {
     const select = { ...this.selectScope.select, password, ...fields };
+    const reference = JSON.stringify(select + '-user-name');
     try {
-      return await this.prisma.user.findUniqueOrThrow({
-        where: { name },
-        select,
-      });
+      if (!userInMemory.hasItem(reference)) {
+        userInMemory.storeExpiringItem(
+          reference,
+          await this.prisma.user.findUniqueOrThrow({
+            where: { name },
+            select,
+          }),
+
+          process.env.NODE_ENV === 'test' ? 5 : 3600 * 24, // if test env expire in 5 miliseconds else 1 day
+        );
+      }
+      return userInMemory.retrieveItemValue(reference);
     } catch (error) {
       throw new Error(error);
     }
