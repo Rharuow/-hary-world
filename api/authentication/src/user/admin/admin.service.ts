@@ -79,28 +79,25 @@ export class AdminService {
     id: string;
     adminId: string;
   }) {
-    const { ...user }: Prisma.UserUpdateInput = data;
-    const { ...admin }: Prisma.AdminUpdateInput = data;
+    const { name, password, ...admin } = data;
 
-    console.log('user = ', user);
-    console.log('admin = ', admin);
-
-    // try {
-    //   return await this.prisma.user.update({
-    //     where: { id, AND: { admin: { id: adminId } } },
-    //     data: {
-    //       ...(user && user),
-    //       ...(admin && {
-    //         admin: {
-    //           update: {
-    //             data: admin,
-    //           },
-    //         },
-    //       }),
-    //     },
-    //   });
-    // } catch (error) {
-    //   throw new Error(error);
-    // }
+    try {
+      return await this.prisma.user.update({
+        where: { id, AND: { admin: { id: adminId } } },
+        data: {
+          ...(name && { name }),
+          ...(password && { password }),
+          ...(admin && {
+            admin: {
+              update: {
+                data: admin,
+              },
+            },
+          }),
+        },
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 }

@@ -123,5 +123,24 @@ describe('AdminController', () => {
       expect(result.admin).toBeDefined();
       expect(result.admin).toHaveProperty('email', 'adminedited@gmai.com');
     });
+
+    it('should update a specific admin', async () => {
+      await controller.updateAdmin(
+        {
+          adminId: String(admin.admin?.id),
+          id: admin.id,
+        },
+        {},
+      );
+
+      const result = await controller.getAdmin({
+        id: admin.id,
+        adminId: String(admin.admin?.id),
+      });
+
+      expect(result).toBeDefined();
+      expect(result.admin).toBeDefined();
+      expect(result.admin).toHaveProperty('email', 'adminedited@gmai.com');
+    });
   });
 });

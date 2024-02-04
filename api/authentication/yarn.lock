@@ -4215,6 +4215,11 @@ memfs@^3.4.1:
   dependencies:
     fs-monkey "^1.0.4"
 
+memory-cache-node@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/memory-cache-node/-/memory-cache-node-1.4.0.tgz#8d432d2fa7ef322083998ba9c31f2c61df57ee26"
+  integrity sha512-rieJHT67nfitpZmOWcGSX11zC5G56vT2awgw5jApBhJowuMPl5mAPX36w8byJztAKGSluVK02LSW8LIxlTkXdA==
+
 merge-descriptors@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/merge-descriptors/-/merge-descriptors-1.0.1.tgz#b00aaa556dd8b44568150ec9d1b953f3f90cbb61"
