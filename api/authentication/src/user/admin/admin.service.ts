@@ -1,10 +1,35 @@
 import { encodeSha256 } from '@/libs/bcrypt';
+import {
+  adminInMemory,
+  adminsInMemory,
+  clientInMemory,
+  clientsInMemory,
+  userInMemory,
+  usersInMemory,
+} from '@/libs/memory-cache';
 import { PrismaService } from '@/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class AdminService {
+  private readonly selectScope = {
+    name: true,
+    id: true,
+    role: {
+      select: {
+        name: true,
+        id: true,
+      },
+    },
+    admin: {
+      select: {
+        id: true,
+        phone: true,
+        email: true,
+      },
+    },
+  };
   constructor(private readonly prisma: PrismaService) {}
 
   async createAdmin(
@@ -12,6 +37,12 @@ export class AdminService {
       Omit<Prisma.UserCreateInput, 'role'> & { roleId: string },
   ) {
     try {
+      userInMemory.clear();
+      usersInMemory.clear();
+      adminInMemory.clear();
+      adminsInMemory.clear();
+      clientInMemory.clear();
+      clientsInMemory.clear();
       return await this.prisma.user.create({
         data: {
           name: data.name,
@@ -31,40 +62,40 @@ export class AdminService {
   }
 
   async getAdmin({ adminId, id }: { id: string; adminId: string }) {
+    const reference = adminId + '-' + id + '-' + 'admin';
     try {
-      return await this.prisma.user.findUniqueOrThrow({
-        where: { id, AND: { admin: { id: adminId } } },
-        select: {
-          name: true,
-          id: true,
-          admin: { select: { id: true, phone: true, email: true } },
-          role: { select: { id: true, name: true } },
-        },
-        // include: { admin: true, role: true },
-      });
+      if (!adminInMemory.hasItem(reference)) {
+        adminInMemory.storeExpiringItem(
+          reference,
+          await this.prisma.user.findUniqueOrThrow({
+            where: { id, AND: { admin: { id: adminId } } },
+            select: this.selectScope,
+          }),
+          process.env.NODE_ENV === 'test' ? 5 : 3600 * 24, // if test env expire in 5 miliseconds else 1 day
+        );
+      }
+      return adminInMemory.retrieveItemValue(reference);
     } catch (error) {
       throw new Error(error);
     }
   }
 
   async listAdmin() {
+    const reference = JSON.stringify(this.selectScope) + '-list-admin';
     try {
-      return await this.prisma.user.findMany({
-        where: {
-          role: { name: 'ADMIN' },
-        },
-        select: {
-          name: true,
-          id: true,
-          admin: {
-            select: {
-              id: true,
-              phone: true,
-              email: true,
+      if (!adminsInMemory.hasItem(reference)) {
+        adminsInMemory.storeExpiringItem(
+          reference,
+          await this.prisma.user.findMany({
+            where: {
+              role: { name: 'ADMIN' },
             },
-          },
-        },
-      });
+            select: this.selectScope,
+          }),
+          process.env.NODE_ENV === 'test' ? 5 : 3600 * 24, // if test env expire in 5 miliseconds else 1 day
+        );
+      }
+      return adminsInMemory.retrieveItemValue(reference);
     } catch (error) {
       throw new Error(error);
     }
@@ -80,7 +111,12 @@ export class AdminService {
     adminId: string;
   }) {
     const { name, password, ...admin } = data;
-
+    userInMemory.clear();
+    usersInMemory.clear();
+    adminInMemory.clear();
+    adminsInMemory.clear();
+    clientInMemory.clear();
+    clientsInMemory.clear();
     try {
       return await this.prisma.user.update({
         where: { id, AND: { admin: { id: adminId } } },

@@ -1,4 +1,11 @@
-import { userInMemory, usersInMemory } from '@/libs/memory-cache';
+import {
+  adminInMemory,
+  adminsInMemory,
+  clientInMemory,
+  clientsInMemory,
+  userInMemory,
+  usersInMemory,
+} from '@/libs/memory-cache';
 import { PrismaService } from '@/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 
@@ -42,6 +49,10 @@ export class UserService {
     try {
       usersInMemory.clear();
       userInMemory.clear();
+      adminInMemory.clear();
+      adminsInMemory.clear();
+      clientInMemory.clear();
+      clientsInMemory.clear();
       return await this.prisma.user.delete({
         where: { id },
       });
@@ -72,7 +83,7 @@ export class UserService {
 
   async findUserByName(name: string, password?: boolean, fields?: object) {
     const select = { ...this.selectScope.select, password, ...fields };
-    const reference = JSON.stringify(select + '-user-name');
+    const reference = JSON.stringify(select) + '-user-name';
     try {
       if (!userInMemory.hasItem(reference)) {
         userInMemory.storeExpiringItem(

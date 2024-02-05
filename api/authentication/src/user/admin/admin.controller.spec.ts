@@ -66,7 +66,7 @@ describe('AdminController', () => {
         .mockImplementation(async () => result);
 
       expect(result).toBeDefined();
-      expect(result).toHaveProperty('length', result.length);
+      expect(result).toHaveProperty('length', result?.length);
     });
   });
 
@@ -79,10 +79,10 @@ describe('AdminController', () => {
       jest.spyOn(controller, 'getAdmin').mockImplementation(async () => result);
 
       expect(result).toBeDefined();
-      expect(result).toHaveProperty('name', result.name);
-      expect(result).toHaveProperty('admin', result.admin);
-      expect(result.admin).toHaveProperty('email', result.admin?.email);
-      expect(result.admin).toHaveProperty('phone', result.admin?.phone);
+      expect(result).toHaveProperty('name', result?.name);
+      expect(result).toHaveProperty('admin', result?.admin);
+      expect(result?.admin).toHaveProperty('email', result?.admin?.email);
+      expect(result?.admin).toHaveProperty('phone', result?.admin?.phone);
     });
   });
 
@@ -120,8 +120,8 @@ describe('AdminController', () => {
       });
 
       expect(result).toBeDefined();
-      expect(result.admin).toBeDefined();
-      expect(result.admin).toHaveProperty('email', 'adminedited@gmai.com');
+      expect(result?.admin).toBeDefined();
+      expect(result?.admin).toHaveProperty('email', 'adminedited@gmai.com');
     });
 
     it('should update a specific admin', async () => {
@@ -139,8 +139,8 @@ describe('AdminController', () => {
       });
 
       expect(result).toBeDefined();
-      expect(result.admin).toBeDefined();
-      expect(result.admin).toHaveProperty('email', 'adminedited@gmai.com');
+      expect(result?.admin).toBeDefined();
+      expect(result?.admin).toHaveProperty('email', 'adminedited@gmai.com');
     });
   });
 });
