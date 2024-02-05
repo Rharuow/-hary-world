@@ -80,7 +80,7 @@ export class ClientController {
   @HttpCode(204)
   async updateClient(
     @Param() { clientId, id }: { id: string; clientId: string },
-    @Body() data: Prisma.UserUpdateInput & { client: Prisma.ClientUpdateInput },
+    @Body() data: Prisma.UserUpdateInput & Prisma.ClientUpdateInput,
   ) {
     try {
       await this.clientService.updateClient({ clientId, id, data });

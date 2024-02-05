@@ -96,11 +96,11 @@ export class ClientService {
     data,
     id,
   }: {
-    data: Prisma.UserUpdateInput & { client: Prisma.ClientUpdateInput };
+    data: Prisma.UserUpdateInput & Prisma.ClientUpdateInput;
     id: string;
     clientId: string;
   }) {
-    const { client, ...user } = data;
+    const { name, password, ...client } = data;
     usersInMemory.clear();
     userInMemory.clear();
     adminInMemory.clear();
@@ -111,7 +111,8 @@ export class ClientService {
       return await this.prisma.user.update({
         where: { id, AND: { client: { id: clientId } } },
         data: {
-          ...user,
+          ...(name && { name }),
+          ...(password && { password }),
           client: {
             update: {
               data: client,
