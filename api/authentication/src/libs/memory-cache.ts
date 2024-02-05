@@ -1,4 +1,4 @@
-import { Client, Prisma, Role, User } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { MemoryCache } from 'memory-cache-node';
 
 const TIMETOEXPIRECACHE = process.env.NODE_ENV === 'test' ? 5 : 60 * 60; // 1 hour to expire items
@@ -69,7 +69,14 @@ export const adminsInMemory = new MemoryCache<
 
 export const clientInMemory = new MemoryCache<
   string,
-  User & { role?: Role; client: Client }
+  Prisma.UserGetPayload<{
+    select: {
+      name: true;
+      id: true;
+      role: { select: { name: true; id: true } };
+      client: { select: { email: true; phone: true; id: true } };
+    };
+  }>
 >(
   TIMETOEXPIRECACHE,
   100, // number of items
@@ -77,7 +84,16 @@ export const clientInMemory = new MemoryCache<
 
 export const clientsInMemory = new MemoryCache<
   string,
-  Array<User & { role?: Role; client: Client }>
+  Array<
+    Prisma.UserGetPayload<{
+      select: {
+        name: true;
+        id: true;
+        role: { select: { name: true; id: true } };
+        client: { select: { email: true; phone: true; id: true } };
+      };
+    }>
+  >
 >(
   TIMETOEXPIRECACHE,
   100, // number of items
