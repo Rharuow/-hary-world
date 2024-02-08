@@ -1,6 +1,6 @@
 import { Image } from "@/components/ui/image";
 
-import { MoreVertical } from "lucide-react";
+import { AlignJustify } from "lucide-react";
 
 export const Header = () => {
   return (
@@ -12,7 +12,7 @@ export const Header = () => {
           Desenvolvimento web
         </p>
       </div>
-      <MoreVertical size={24} />
+      <AlignJustify size={24} />
     </div>
   );
 };
