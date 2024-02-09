@@ -20,7 +20,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={poppins.className + " min-h-screen bg-primary-light"}>
+      <body
+        className={
+          poppins.className + " min-h-screen bg-primary-light scroll-m-14"
+        }
+      >
         <Header /> {children}
       </body>
     </html>
