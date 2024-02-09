@@ -81,8 +81,8 @@ const config = {
         },
       },
       animation: {
-        showing: "showing 0.5s ease-in",
-        hidding: "hidding 0.5s ease-out",
+        showing: "showing 1s ease-in",
+        hidding: "hidding 1s ease-out",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
