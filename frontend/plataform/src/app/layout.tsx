@@ -19,12 +19,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={
-          poppins.className + " min-h-screen bg-primary-light flex flex-col"
-        }
-      >
+    <html lang="en" className="scroll-smooth">
+      <body className={poppins.className + " min-h-screen bg-primary-light"}>
         <Header /> {children}
       </body>
     </html>
