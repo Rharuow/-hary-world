@@ -71,8 +71,18 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        showing: {
+          from: { opacity: "0" },
+          to: { opacity: "1" },
+        },
+        hidding: {
+          from: { opacity: "1" },
+          to: { opacity: "0" },
+        },
       },
       animation: {
+        showing: "showing 0.5s ease-in",
+        hidding: "hidding 0.5s ease-out",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
