@@ -14,6 +14,8 @@ import Link from "next/link";
 import React from "react";
 import { useInView } from "react-intersection-observer";
 
+import t from "@/i18n.json";
+
 export const About = () => {
   const { ref, inView } = useInView({
     threshold: 0.5, // adjust the threshold as per your requirement
@@ -46,10 +48,10 @@ export const About = () => {
             Harysson Soares
           </p>
           <p className="text-foreground text-center font-semibold">
-            Desenvolvedor fullstack web
+            {t["pt-BR"].home.about["Fullstack web developer"]}
           </p>
           <p className="text-foreground text-center font-semibold">
-            Especialista em
+            {t["pt-BR"].home.about["Expert in"]}
           </p>
           <div className="grid grid-cols-2 gap-2">
             <TooltipProvider>
@@ -200,7 +202,7 @@ export const About = () => {
         </Card>
       </div>
 
-      <Link href="#body" className="absolute bottom-3 right-2">
+      <Link href="#history" className="absolute bottom-3 right-2">
         <ChevronDown className="animate-pulse text-foreground" size={28} />
       </Link>
     </div>

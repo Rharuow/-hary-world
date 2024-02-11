@@ -4,6 +4,8 @@ import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useInView } from "react-intersection-observer";
 
+import t from "@/i18n.json";
+
 export const Introduction = () => {
   const { ref, inView } = useInView({
     threshold: 0.5, // adjust the threshold as per your requirement
@@ -19,7 +21,11 @@ export const Introduction = () => {
           "animate-coming-from-the-left": inView,
         })}
       >
-        E se um desenvolvedor fullstack resolvesse criar sua própria empresa?
+        {
+          t["pt-BR"].home.introduction[
+            "What if a fullstack developer decided to create his own company?"
+          ]
+        }
       </p>
       <p
         className={cn(
@@ -29,15 +35,22 @@ export const Introduction = () => {
           }
         )}
       >
-        E se essa empresa fosse um conjunto de pequenas ferramentas que podem
-        servir de produto pra você?
+        {
+          t["pt-BR"].home.introduction[
+            "What if this company was a set of small tools that can serve as a product for you?"
+          ]
+        }
       </p>
       <p
         className={cn("text-foreground font-semibold  duration-[900ms]", {
           "animate-coming-from-the-left": inView,
         })}
       >
-        E se cada produto desse demonstrasse as suas capacidades técnicas?
+        {
+          t["pt-BR"].home.introduction[
+            "What if each product demonstrated its technical capabilities?"
+          ]
+        }
       </p>
       <p
         className={cn(
@@ -47,14 +60,22 @@ export const Introduction = () => {
           }
         )}
       >
-        E se eu te contar que esse portfólio tem esse objetivo?
+        {
+          t["pt-BR"].home.introduction[
+            "What if I told you that this portfolio has this objective?"
+          ]
+        }
       </p>
       <p
         className={cn("text-foreground font-semibold duration-[1800ms]", {
           "animate-coming-from-the-left": inView,
         })}
       >
-        E se a gente sair do campo das ideias e colocar na prática?
+        {
+          t["pt-BR"].home.introduction[
+            "What if we leave the field of ideas and put it into practice?"
+          ]
+        }
       </p>
 
       <Link href="#about">
