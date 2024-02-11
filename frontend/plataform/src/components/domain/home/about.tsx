@@ -65,6 +65,34 @@ export const About = () => {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Image
+                    alt="Nodejs Dark logo"
+                    src="/skill-icons_tailwindcss-dark.png"
+                    className="w-16 m-auto"
+                  />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Tailwind</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Image
+                    alt="NestJs Dark logo"
+                    src="/skill-icons_bootstrap.png"
+                    className="w-16 m-auto"
+                  />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Bootstrap</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Image
                     alt="React Dark logo"
                     src="/skill-icons_react-dark.png"
                     className="w-16 m-auto"
