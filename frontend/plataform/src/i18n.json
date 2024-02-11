@@ -1,0 +1,31 @@
+{
+  "pt-BR": {
+    "home": {
+      "introduction": {
+        "What if a fullstack developer decided to create his own company?": "E se um desenvolvedor fullstack resolvesse criar sua própria empresa?",
+        "What if this company was a set of small tools that can serve as a product for you?": "E se essa empresa fosse um conjunto de pequenas ferramentas que podem servir de produto pra você?",
+        "What if each product demonstrated its technical capabilities?": "E se cada produto desse demonstrasse as suas capacidades técnicas?",
+        "What if I told you that this portfolio has this objective?": "E se eu te contar que esse portfólio tem esse objetivo?",
+        "What if we leave the field of ideas and put it into practice?": "E se a gente sair do campo das ideias e colocar na prática?"
+      },
+      "about": {
+        "Fullstack web developer": "Desenvolvedor fullstack web",
+        "Expert in": "Especialista em"
+      },
+      "history": {
+        "The teacher": "O Professor",
+        "I began my professional career as an educator, where from the beginning I sought to integrate technology as an ally in the teaching process. Using web tools and applications has always been a constant strategy, aiming to improve my teaching and awaken students' interest in the relevance of the content I shared.": "Iniciei minha trajetória profissional como educador, onde desde o princípio busquei integrar a tecnologia como uma aliada no processo de ensino. Utilizar ferramentas web e aplicativos sempre foi uma estratégia constante, visando aprimorar minha didática e despertar o interesse dos alunos para a relevância do conteúdo que compartilhava.",
+        "The change": "A mudança",
+        "In 2018, during a master's project, I fell in love with programming while developing an MVP using Ruby on Rails for an educational platform. This milestone led me to abandon my master's degree and dedicate myself entirely to studying and practicing development. I started with PHP, then specialized in WordPress, leaving my career as a teacher to focus on development.": "Em 2018, durante um projeto de mestrado, me apaixonei pela programação ao desenvolver um MVP usando Ruby on Rails para uma plataforma educacional. Esse marco me levou a abandonar o mestrado e me dedicar integralmente ao estudo e prática de desenvolvimento. Comecei com PHP, depois me especializei em WordPress, deixando minha carreira como professor para focar no desenvolvimento.",
+        "The start": "O início",
+        "In 2019, I enrolled at the Federal Institute of Education, Science, and Technology of Rio Grande do Norte (IFRN) to pursue a degree in Technology in Analysis and Systems Development (TADS). In the first semester, I joined the Technology and Innovation Center (NAVI), where I participated in the creation of a portal for registering data from research conducted in the laboratory. This portal was developed using Laravel as an API and PostgreSQL as the database management system (DBMS), while a React application was utilized to consume this data and generate graphs for the analysis of research data. I was involved in this project from March to September 2019. Following this significant experience, I encountered an opportunity that proved to be the most enriching one yet.": "Em 2019, ingressei no Instituto Federal de Educação, Ciência e Tecnologia do Rio Grande do Norte (IFRN) para cursar Tecnologia em Análise e Desenvolvimento de Sistemas (TADS). Já no primeiro semestre, integrei o Núcleo de Tecnologia e Inovação (NAVI), onde participei da criação de um portal para o cadastro de dados das pesquisas realizadas no laboratório. Este portal foi desenvolvido utilizando Laravel como API e PostgreSQL como SGDB, enquanto uma aplicação React foi empregada para consumir esses dados e gerar gráficos que possibilitassem a análise das informações obtidas nas pesquisas. Permaneci nesse projeto de março a setembro de 2019. Após essa significativa experiência, deparei-me com uma oportunidade que se revelou como a mais enriquecedora até então.",
+        "The Tootz": "O Tootz",
+        "From September 2019 to December 2022, I worked at Tootz Digital Solutions, where I was able to assemble my stack. Despite being a software factory, the products were always focused on being developed with ReactJs/NextJs and Ruby on Rails.": "De setembro de 2019 até dezembro de 2022, trabalhei na Tootz Soluções Digitais, onde pude montar minha stack. Apesar de ser uma fábrica de software, os produtos eram sempre voltados para serem desenvolvidos com ReactJs/NextJs e Ruby on Rails.",
+        "The Freelancer": "O Freelancer",
+        "At the same time, I also ventured into the world of freelancers and always sought projects with ReactJs and NodeJs. Therefore, during this time, I gained a lot of experience with ReactJs and NodeJs. I worked extensively with a technology called AdonisJs and NestJs, which gave me a lot of expertise to work with various backend architectures (MVC, microservices, RESTful API, and gRPC) and frontend (microapps, SPA, and Webapps)": "Paralelamente, também me lancei ao mundo dos freelancers e sempre busquei projetos com ReactJs e NodeJs. Portanto, durante esse tempo, adquiri muita experiência com ReactJs e NodeJs. Trabalhei bastante com uma tecnologia chamada AdonisJs e NestJs, o que me gerou muita expertise para trabalhar com arquiteturas diversas de backend (MVC, microserviços, API RESTful e gRPC) e frontend (microapps, SPA e Webapps).",
+        "The GRT8": "A GRT8",
+        "Upon leaving Tootz, I had the opportunity to work at a larger company for 8 months, GRT8 Innovations and Business. My time there was short due to the in-person work style. I had already become accustomed to remote work and didn't know it.": "Ao sair da Tootz, tive a oportunidade de trabalhar numa empresa maior por 8 meses, a GRT8 Inovações e Negócios. Meu tempo por lá foi curto devido ao estilo de trabalho presencial. Eu já havia me acostumado com trabalho remoto e não sabia."
+      }
+    }
+  }
+}
