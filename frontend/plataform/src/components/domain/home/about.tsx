@@ -1,5 +1,11 @@
 import { Card } from "@/components/ui/card";
 import { Image } from "@/components/ui/image";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import Link from "next/link";
 import React from "react";
@@ -27,36 +33,90 @@ export const About = () => {
             Especialista em
           </p>
           <div className="grid grid-cols-2 gap-4">
-            <Image
-              alt="Javascript logo"
-              src="/skill-icons_javascript.png"
-              className="w-16 m-auto"
-            />
-            <Image
-              alt="Javascript logo"
-              src="/skill-icons_typescript.png"
-              className="w-16 m-auto"
-            />
-            <Image
-              alt="Javascript logo"
-              src="/skill-icons_react-dark.png"
-              className="w-16 m-auto"
-            />
-            <Image
-              alt="Javascript logo"
-              src="/skill-icons_nextjs-dark.png"
-              className="w-16 m-auto"
-            />
-            <Image
-              alt="Javascript logo"
-              src="/skill-icons_nodejs-dark.png"
-              className="w-16 m-auto"
-            />
-            <Image
-              alt="Javascript logo"
-              src="/skill-icons_nestjs-dark.png"
-              className="w-16 m-auto"
-            />
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Image
+                    alt="Javascript logo"
+                    src="/skill-icons_javascript.png"
+                    className="w-16 m-auto"
+                  />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Javascript</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Image
+                    alt="Typescript logo"
+                    src="/skill-icons_typescript.png"
+                    className="w-16 m-auto"
+                  />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Typescript</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Image
+                    alt="React Dark logo"
+                    src="/skill-icons_react-dark.png"
+                    className="w-16 m-auto"
+                  />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>ReactJs</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Image
+                    alt="Nextjs Dark logo"
+                    src="/skill-icons_nextjs-dark.png"
+                    className="w-16 m-auto"
+                  />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>NextJs</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Image
+                    alt="Nodejs Dark logo"
+                    src="/skill-icons_nodejs-dark.png"
+                    className="w-16 m-auto"
+                  />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>NodeJs</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Image
+                    alt="NestJs Dark logo"
+                    src="/skill-icons_nestjs-dark.png"
+                    className="w-16 m-auto"
+                  />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>NestJs</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </Card>
       </div>
