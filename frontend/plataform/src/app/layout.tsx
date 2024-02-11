@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import { Header } from "./header";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -18,8 +19,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={poppins.className}>{children}</body>
+    <html lang="en" className="scroll-smooth  overflow-y-hidden">
+      <body
+        className={
+          poppins.className + " min-h-screen bg-primary-light scroll-m-14"
+        }
+        id="body"
+      >
+        <Header /> {children}
+      </body>
     </html>
   );
 }
