@@ -1,11 +1,7 @@
-"use client";
-
 import { ChevronDown } from "lucide-react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export const Introduction = () => {
-  const router = useRouter();
-
   return (
     <div
       className="bg-primary-light flex flex-col justify-around px-4 min-h-[calc(100vh-64px)] relative"
@@ -28,12 +24,13 @@ export const Introduction = () => {
         E se a gente sair do campo das ideias e colocar na prática?
       </p>
 
-      <ChevronDown
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 animate-pulse"
-        data-te-smooth-scroll-init
-        onClick={() => router.push("/#about")}
-        size={24}
-      />
+      <Link href="#about">
+        <ChevronDown
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 animate-pulse text-foreground"
+          data-te-smooth-scroll-init
+          size={24}
+        />
+      </Link>
     </div>
   );
 };
