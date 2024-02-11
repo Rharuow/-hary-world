@@ -1,7 +1,6 @@
-import crypto from 'crypto';
+import * as bcrypto from 'bcrypt';
 
 export function encodeSha256(data: string) {
-  const hash = crypto.createHash('sha256');
-  hash.update(data);
-  return hash.digest('hex');
+  const salt = bcrypto.genSaltSync(Number(process.env.SALT_ROUNDS));
+  return bcrypto.hashSync(data, salt);
 }
