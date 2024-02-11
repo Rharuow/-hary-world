@@ -7,11 +7,11 @@ import React from "react";
 export const About = () => {
   return (
     <div
-      className="bg-secondary-light h-screen relative flex flex-col justify-center gap-3 px-4"
+      className="bg-gradient-to-b from-secondary to-primary h-screen relative flex flex-col justify-center gap-3 px-4"
       id="about"
     >
       <Link href="#body" className="absolute top-16 right-2">
-        <ChevronUp className="animate-pulse text-foreground" size={24} />
+        <ChevronUp className="animate-pulse text-foreground" size={28} />
       </Link>
 
       <div className="flex flex-col items-center">
@@ -62,7 +62,7 @@ export const About = () => {
       </div>
 
       <Link href="#body" className="absolute bottom-3 right-2">
-        <ChevronDown className="animate-pulse text-foreground" size={24} />
+        <ChevronDown className="animate-pulse text-foreground" size={28} />
       </Link>
     </div>
   );

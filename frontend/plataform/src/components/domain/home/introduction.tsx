@@ -4,7 +4,7 @@ import Link from "next/link";
 export const Introduction = () => {
   return (
     <div
-      className="bg-primary-light flex flex-col justify-around px-4 min-h-[calc(100vh-64px)] relative"
+      className="bg-gradient-to-b from-10% from-primary to-100% to-secondary flex flex-col justify-around px-4 min-h-[calc(100vh-64px)] relative"
       id="introduction"
     >
       <p className="text-foreground font-semibold animate-showing duration-[100ms]">
@@ -28,7 +28,7 @@ export const Introduction = () => {
         <ChevronDown
           className="absolute bottom-0 left-1/2 -translate-x-1/2 animate-pulse text-foreground"
           data-te-smooth-scroll-init
-          size={24}
+          size={28}
         />
       </Link>
     </div>
