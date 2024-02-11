@@ -15,11 +15,7 @@ export const About = () => {
       </Link>
 
       <div className="flex flex-col items-center">
-        <Image
-          className="w-32"
-          alt="me with coat"
-          src="/me-with-coat (1).png"
-        />
+        <Image className="w-32" alt="me with coat" src="/me-with-coat.png" />
         <Card className="bg-primary p-3 w-full shadow flex flex-col gap-2">
           <p className="text-foreground text-center font-semibold">
             Harysson Soares
