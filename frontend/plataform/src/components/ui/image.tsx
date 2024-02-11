@@ -1,17 +1,14 @@
 import React from "react";
 import ImageNext from "next/image";
 
-export const Image = ({
-  alt,
-  src,
-  title,
-  className,
-}: {
-  className?: string;
-  alt: string;
-  title?: string;
-  src: string;
-}) => {
+const Image = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement> & {
+    alt: string;
+    title?: string;
+    src: string;
+  }
+>(({ className, src, alt, title, ...props }, ref) => {
   return (
     <ImageNext
       width={0}
@@ -24,4 +21,8 @@ export const Image = ({
       {...(className && { className })}
     />
   );
-};
+});
+
+Image.displayName = "Image";
+
+export { Image };

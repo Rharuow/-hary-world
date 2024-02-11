@@ -71,6 +71,30 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "coming-from-the-rigth": {
+          from: {
+            transform: "translateX(100%)",
+          },
+          to: { transform: "translateX(0)" },
+        },
+        "coming-from-the-left": {
+          from: {
+            transform: "translateX(-100%)",
+          },
+          to: { transform: "translateX(0)" },
+        },
+        "coming-from-the-bottom": {
+          from: {
+            transform: "translateY(100%)",
+          },
+          to: { transform: "translateY(0)" },
+        },
+        "coming-from-the-top": {
+          from: {
+            transform: "translateY(-100%)",
+          },
+          to: { transform: "translateY(0)" },
+        },
         showing: {
           from: { opacity: "0" },
           to: { opacity: "1" },
@@ -83,6 +107,10 @@ const config = {
       animation: {
         showing: "showing 1s ease-in",
         hidding: "hidding 1s ease-out",
+        "coming-from-the-rigth": "coming-from-the-rigth 0.5s ease-out",
+        "coming-from-the-left": "coming-from-the-left 0.5s ease-out",
+        "coming-from-the-bottom": "coming-from-the-bottom 0.5s ease-out",
+        "coming-from-the-top": "coming-from-the-top 0.5s ease-out",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
