@@ -23,13 +23,13 @@ export const History = () => {
       id="history"
       className="bg-gradient-to-b from-primary to-secondary h-screen relative justify-center flex flex-col gap-3 px-8"
     >
-      <Link href="#about" className="absolute top-16 right-2">
-        <ChevronUp className="animate-pulse text-foreground" size={28} />
-      </Link>
       <Accordion
         type="single"
         collapsible
-        className={cn("w-full mt-4 hidden", { block: inView })}
+        className={cn("w-full mt-4", {
+          invisible: !inView,
+          visible: inView,
+        })}
       >
         <AccordionItem
           value="teacher"
