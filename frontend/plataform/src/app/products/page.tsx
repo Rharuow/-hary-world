@@ -15,7 +15,7 @@ import t from "@/i18n.json";
 
 export default function Products() {
   return (
-    <div className="flex flex-col px-4 py-6">
+    <main className="flex flex-col px-4 py-6">
       <Accordion type="single" collapsible>
         <AccordionItem value="caf" className="bg-primary mb-3">
           <AccordionTrigger className="px-3">
@@ -44,6 +44,6 @@ export default function Products() {
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-    </div>
+    </main>
   );
 }
