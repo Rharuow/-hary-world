@@ -8,6 +8,7 @@ type UserWithCreatedAt = {
     name: ROLE;
     id: string;
   };
+  email: string;
   name: string;
   id: string;
   password: string;
@@ -18,7 +19,7 @@ describe('UserService', () => {
   let service: UserService;
   let user: Pick<
     User & { role: Pick<Role, 'name' | 'id'> },
-    'id' | 'name' | 'role'
+    'id' | 'name' | 'role' | 'email'
   >;
   let prismaService: PrismaService;
 
@@ -39,6 +40,7 @@ describe('UserService', () => {
       data: {
         name: 'User test service',
         password: '123',
+        email: 'user-service@example.com',
         roleId: String(role?.id),
       },
       include: { role: true },
@@ -72,20 +74,20 @@ describe('UserService', () => {
     });
   });
 
-  describe('findUserByName', () => {
+  describe('findUserByEmail', () => {
     it('should return a specific user', async () => {
-      const result = await service.findUserByName(user.name);
+      const result = await service.findUserByEmail(user.email);
       jest
-        .spyOn(service, 'findUserByName')
+        .spyOn(service, 'findUserByEmail')
         .mockImplementation(async () => result);
 
       expect(result).toBeDefined();
     });
 
     it('should return a specific user contained password attribute', async () => {
-      const result = await service.findUserByName(user.name, true);
+      const result = await service.findUserByEmail(user.email, true);
       jest
-        .spyOn(service, 'findUserByName')
+        .spyOn(service, 'findUserByEmail')
         .mockImplementation(async () => result);
 
       expect(result).toBeDefined();
@@ -93,12 +95,12 @@ describe('UserService', () => {
     });
 
     it('should return a specific user without password attribute and ', async () => {
-      const result = (await service.findUserByName(user.name, true, {
+      const result = (await service.findUserByEmail(user.email, true, {
         createdAt: true,
       })) as UserWithCreatedAt;
 
       jest
-        .spyOn(service, 'findUserByName')
+        .spyOn(service, 'findUserByEmail')
         .mockImplementation(async () => result);
 
       expect(result).toBeDefined();

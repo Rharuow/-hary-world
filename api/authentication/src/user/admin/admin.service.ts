@@ -16,6 +16,7 @@ export class AdminService {
   private readonly selectScope = {
     name: true,
     id: true,
+    email: true,
     role: {
       select: {
         name: true,
@@ -26,7 +27,6 @@ export class AdminService {
       select: {
         id: true,
         phone: true,
-        email: true,
       },
     },
   };
@@ -47,10 +47,10 @@ export class AdminService {
         data: {
           name: data.name,
           password: encodeSha256(data.password),
+          email: data.email,
           roleId: data.roleId,
           admin: {
             create: {
-              ...(data.email && { email: data.email }),
               ...(data.phone && { phone: data.phone }),
             },
           },
@@ -110,7 +110,7 @@ export class AdminService {
     id: string;
     adminId: string;
   }) {
-    const { name, password, ...admin } = data;
+    const { name, password, email, ...admin } = data;
     userInMemory.clear();
     usersInMemory.clear();
     adminInMemory.clear();
@@ -123,6 +123,7 @@ export class AdminService {
         data: {
           ...(name && { name }),
           ...(password && { password }),
+          ...(email && { email }),
           ...(admin && {
             admin: {
               update: {

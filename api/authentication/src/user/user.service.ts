@@ -14,6 +14,7 @@ export class UserService {
   private readonly selectScope = {
     select: {
       name: true,
+      email: true,
       id: true,
       role: {
         select: {
@@ -81,15 +82,15 @@ export class UserService {
     }
   }
 
-  async findUserByName(name: string, password?: boolean, fields?: object) {
+  async findUserByEmail(email: string, password?: boolean, fields?: object) {
     const select = { ...this.selectScope.select, password, ...fields };
-    const reference = JSON.stringify(select) + '-user-name';
+    const reference = JSON.stringify(select) + '-user-email';
     try {
       if (!userInMemory.hasItem(reference)) {
         userInMemory.storeExpiringItem(
           reference,
           await this.prisma.user.findUniqueOrThrow({
-            where: { name },
+            where: { email },
             select,
           }),
 

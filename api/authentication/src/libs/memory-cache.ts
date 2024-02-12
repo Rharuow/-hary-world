@@ -8,6 +8,7 @@ export const userInMemory = new MemoryCache<
   Prisma.UserGetPayload<{
     select: {
       name: true;
+      email: true;
       password?: boolean;
       id: true;
       role: { select: { name: true; id: true } };
@@ -24,6 +25,7 @@ export const usersInMemory = new MemoryCache<
     Prisma.UserGetPayload<{
       select: {
         name: true;
+        email: true;
         password?: boolean;
         id: true;
         role: { select: { name: true; id: true } };
@@ -40,9 +42,10 @@ export const adminInMemory = new MemoryCache<
   Prisma.UserGetPayload<{
     select: {
       name: true;
+      email: true;
       id: true;
       role: { select: { name: true; id: true } };
-      admin: { select: { email: true; phone: true; id: true } };
+      admin: { select: { phone: true; id: true } };
     };
   }>
 >(
@@ -56,9 +59,10 @@ export const adminsInMemory = new MemoryCache<
     Prisma.UserGetPayload<{
       select: {
         name: true;
+        email: true;
         id: true;
         role: { select: { name: true; id: true } };
-        admin: { select: { email: true; phone: true; id: true } };
+        admin: { select: { phone: true; id: true } };
       };
     }>
   >
@@ -73,8 +77,9 @@ export const clientInMemory = new MemoryCache<
     select: {
       name: true;
       id: true;
+      email: true;
       role: { select: { name: true; id: true } };
-      client: { select: { email: true; phone: true; id: true } };
+      client: { select: { phone: true; id: true } };
     };
   }>
 >(
@@ -89,8 +94,9 @@ export const clientsInMemory = new MemoryCache<
       select: {
         name: true;
         id: true;
+        email: true;
         role: { select: { name: true; id: true } };
-        client: { select: { email: true; phone: true; id: true } };
+        client: { select: { phone: true; id: true } };
       };
     }>
   >
