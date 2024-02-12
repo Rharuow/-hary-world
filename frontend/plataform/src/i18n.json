@@ -1,5 +1,14 @@
 {
   "pt-BR": {
+    "header": {
+      "Web Development": "Desenvolvimento Web",
+      "menu": {
+        "Home": "Home",
+        "Products": "Produtos",
+        "Login": "Login",
+        "Sign up": "Cadastre-se"
+      }
+    },
     "home": {
       "introduction": {
         "What if a fullstack developer decided to create his own company?": "E se um desenvolvedor fullstack resolvesse criar sua própria empresa?",
