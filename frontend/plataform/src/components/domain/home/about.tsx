@@ -27,11 +27,12 @@ export const About = () => {
       id="about"
       ref={ref}
     >
-      <Link href="#body" className="absolute top-16 right-2">
-        <ChevronUp className="animate-pulse text-foreground" size={28} />
-      </Link>
-
-      <div className="flex flex-col items-center">
+      <div
+        className={cn("flex flex-col items-center", {
+          invisible: !inView,
+          visible: inView,
+        })}
+      >
         <Image
           className={cn("w-32", {
             "animate-coming-from-the-bottom": inView,
@@ -201,10 +202,6 @@ export const About = () => {
           </div>
         </Card>
       </div>
-
-      <Link href="#history" className="absolute bottom-3 right-2">
-        <ChevronDown className="animate-pulse text-foreground" size={28} />
-      </Link>
     </div>
   );
 };
