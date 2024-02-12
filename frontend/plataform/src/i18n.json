@@ -56,6 +56,19 @@
         "It's not a email format.": "Não é o formato de um email",
         "This field is required.": "Este campo não pode estar vazio."
       }
+    },
+    "signup": {
+      "Email": "Email",
+      "Sign up": "Cadastro",
+      "Password": "Senha",
+      "Type your email": "Digite seu email",
+      "Type your name": "Digite seu nome",
+      "Type your password": "Digite sua senha",
+      "Create": "Cadastrar",
+      "error": {
+        "It's not a email format.": "Não é o formato de um email",
+        "This field is required.": "Este campo não pode estar vazio."
+      }
     }
   }
 }

@@ -16,7 +16,8 @@ export class ClientService {
   private readonly selectScope = {
     name: true,
     id: true,
-    client: { select: { id: true, phone: true, email: true } },
+    email: true,
+    client: { select: { id: true, phone: true } },
     role: { select: { id: true, name: true } },
   };
   constructor(private readonly prisma: PrismaService) {}
@@ -35,11 +36,11 @@ export class ClientService {
       return await this.prisma.user.create({
         data: {
           name: data.name,
+          email: data.email,
           password: encodeSha256(data.password),
           roleId: data.roleId,
           client: {
             create: {
-              ...(data.email && { email: data.email }),
               ...(data.phone && { phone: data.phone }),
             },
           },

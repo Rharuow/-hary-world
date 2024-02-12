@@ -29,6 +29,7 @@ describe('UserController', () => {
     user = await prismaService.user.create({
       data: {
         name: 'User test controller',
+        email: 'user-controller@example.com',
         password: '123',
         roleId: String(role?.id),
       },

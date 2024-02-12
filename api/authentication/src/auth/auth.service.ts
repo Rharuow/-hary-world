@@ -3,7 +3,6 @@ import { UserService } from '@/user/user.service';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ROLE } from '@prisma/client';
-// import { ROLE } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -13,18 +12,18 @@ export class AuthService {
   ) {}
 
   async signIn({
-    name,
+    email,
     password: inputPassword,
   }: {
-    name: string;
+    email: string;
     password: string;
   }) {
-    const user = await this.userService.findUserByName(name, true);
+    const user = await this.userService.findUserByEmail(email, true);
 
     if (user?.password !== encodeSha256(inputPassword))
       throw new UnauthorizedException();
 
-    const payload = { name: user.name, id: user.id, role: user.role };
+    const payload = { email: user.email, id: user.id, role: user.role };
 
     return {
       access_token: await this.jwtService.signAsync(payload),
@@ -35,6 +34,7 @@ export class AuthService {
     try {
       const user: {
         name: string;
+        email: string;
         password: string;
         id: string;
         role: {
@@ -44,14 +44,14 @@ export class AuthService {
       } = await this.jwtService.verifyAsync(token);
 
       if (user.role.name !== 'ROOT')
-        return await this.userService.findUserByName(
-          user.name,
+        return await this.userService.findUserByEmail(
+          user.email,
           false,
           user.role.name === 'CLIENT'
             ? {
-                client: { select: { email: true, phone: true } },
+                client: { select: { phone: true } },
               }
-            : { admin: { select: { email: true, phone: true } } },
+            : { admin: { select: { phone: true } } },
         );
 
       return await this.jwtService.verifyAsync(token);

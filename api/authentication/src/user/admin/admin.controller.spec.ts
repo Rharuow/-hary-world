@@ -41,12 +41,12 @@ describe('AdminController', () => {
         name: 'admin test',
         password: '123',
         roleId: String(role?.id),
-        email: 'admin@example.com',
+        email: 'admin-controller@example.com',
         phone: '123',
       });
 
       admin = (await prismaService.user.findUnique({
-        where: { name: 'admin test' },
+        where: { email: 'admin-controller@example.com' },
         include: { admin: true, role: true },
       })) as Prisma.UserGetPayload<{ include: { admin: true; role: true } }>;
 
@@ -80,14 +80,14 @@ describe('AdminController', () => {
 
       expect(result).toBeDefined();
       expect(result).toHaveProperty('name', result?.name);
+      expect(result).toHaveProperty('email', result?.email);
       expect(result).toHaveProperty('admin', result?.admin);
-      expect(result?.admin).toHaveProperty('email', result?.admin?.email);
       expect(result?.admin).toHaveProperty('phone', result?.admin?.phone);
     });
   });
 
   describe('updateAdmin', () => {
-    it('should update a specific admin', async () => {
+    it('should update name of a specific admin', async () => {
       await controller.updateAdmin(
         {
           adminId: String(admin.admin?.id),
@@ -120,8 +120,8 @@ describe('AdminController', () => {
       });
 
       expect(result).toBeDefined();
+      expect(result).toHaveProperty('email', 'adminedited@gmai.com');
       expect(result?.admin).toBeDefined();
-      expect(result?.admin).toHaveProperty('email', 'adminedited@gmai.com');
     });
 
     it('should update a specific admin', async () => {
@@ -139,8 +139,8 @@ describe('AdminController', () => {
       });
 
       expect(result).toBeDefined();
+      expect(result).toHaveProperty('email', 'adminedited@gmai.com');
       expect(result?.admin).toBeDefined();
-      expect(result?.admin).toHaveProperty('email', 'adminedited@gmai.com');
     });
   });
 });
