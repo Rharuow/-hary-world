@@ -1,7 +1,5 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { ChevronDown } from "lucide-react";
-import Link from "next/link";
 import { useInView } from "react-intersection-observer";
 
 import t from "@/i18n.json";
@@ -10,6 +8,7 @@ export const Introduction = () => {
   const { ref, inView } = useInView({
     threshold: 0.5, // adjust the threshold as per your requirement
   });
+
   return (
     <div
       className="bg-gradient-to-b from-10% from-primary to-100% to-secondary flex flex-col justify-around px-4 min-h-[calc(100vh-64px)] relative"
@@ -77,14 +76,6 @@ export const Introduction = () => {
           ]
         }
       </p>
-
-      <Link href="#about">
-        <ChevronDown
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 animate-pulse text-foreground"
-          data-te-smooth-scroll-init
-          size={28}
-        />
-      </Link>
     </div>
   );
 };

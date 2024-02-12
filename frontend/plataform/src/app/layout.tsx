@@ -19,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth  overflow-y-hidden">
+    <html lang="en" className="scroll-smooth">
       <body
         className={
           poppins.className + " min-h-screen bg-primary-light scroll-m-14"
