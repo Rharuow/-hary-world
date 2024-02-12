@@ -40,6 +40,9 @@
       "CAF": {
         "title": "CAF - Controle de Ambientes Físicos",
         "description": "Facilita o acesso a condomínios tanto de moradores quanto de visitantes, gerando um histórico de acesso garantindo um fluxo controlado de pessoas sem burocracias."
+      },
+      "building": {
+        "description": "Mais produtos serão publicados em breve..."
       }
     }
   }
