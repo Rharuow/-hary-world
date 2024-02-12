@@ -44,6 +44,18 @@
       "building": {
         "description": "Mais produtos serão publicados em breve..."
       }
+    },
+    "login": {
+      "Email": "Email",
+      "Login": "Login",
+      "Password": "Senha",
+      "Type your email": "Digite seu email",
+      "Type your password": "Digite sua senha",
+      "Enter": "Entrar",
+      "error": {
+        "It's not a email format.": "Não é o formato de um email",
+        "This field is required.": "Este campo não pode estar vazio."
+      }
     }
   }
 }
