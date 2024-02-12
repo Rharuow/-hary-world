@@ -35,6 +35,12 @@
         "The GRT8": "A GRT8",
         "Upon leaving Tootz, I had the opportunity to work at a larger company for 8 months, GRT8 Innovations and Business. My time there was short due to the in-person work style. I had already become accustomed to remote work and didn't know it.": "Ao sair da Tootz, tive a oportunidade de trabalhar numa empresa maior por 8 meses, a GRT8 Inovações e Negócios. Meu tempo por lá foi curto devido ao estilo de trabalho presencial. Eu já havia me acostumado com trabalho remoto e não sabia."
       }
+    },
+    "products": {
+      "CAF": {
+        "title": "CAF - Controle de Ambientes Físicos",
+        "description": "Facilita o acesso a condomínios tanto de moradores quanto de visitantes, gerando um histórico de acesso garantindo um fluxo controlado de pessoas sem burocracias."
+      }
     }
   }
 }

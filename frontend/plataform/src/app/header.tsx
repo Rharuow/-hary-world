@@ -1,11 +1,18 @@
 "use client";
-import { AlignJustify, Boxes, Home } from "lucide-react";
+import {
+  AlignJustify,
+  Boxes,
+  GitPullRequestCreateArrow,
+  Home,
+  LogIn,
+} from "lucide-react";
 
 import { Image } from "@/components/ui/image";
 import {
   Sheet,
   SheetClose,
   SheetContent,
+  SheetFooter,
   SheetTrigger,
 } from "@/components/ui/sheet";
 
@@ -13,6 +20,7 @@ import t from "@/i18n.json";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { Separator } from "@/components/ui/separator";
 
 export const Header = () => {
   const pathname = usePathname();
@@ -30,8 +38,8 @@ export const Header = () => {
         <SheetTrigger asChild>
           <AlignJustify size={28} />
         </SheetTrigger>
-        <SheetContent>
-          <div className="flex flex-col gap-3 py-8">
+        <SheetContent className="flex flex-col gap-4 bg-primary-dark">
+          <div className="flex flex-col gap-3 pt-8">
             <SheetClose asChild>
               <Link
                 href="/"
@@ -57,6 +65,35 @@ export const Header = () => {
               </Link>
             </SheetClose>
           </div>
+          <Separator />
+          <SheetFooter className="flex-col">
+            <SheetClose asChild>
+              <Link
+                href="/login"
+                className={cn("flex gap-2 p-2 rounded-lg", {
+                  "bg-primary": pathname === "/login",
+                })}
+              >
+                <LogIn className="text-foreground" />
+                <p className="text-foreground">
+                  {t["pt-BR"].header.menu.Login}
+                </p>
+              </Link>
+            </SheetClose>
+            <SheetClose asChild>
+              <Link
+                href="/signup"
+                className={cn("flex gap-2 p-2 rounded-lg", {
+                  "bg-primary": pathname === "/signup",
+                })}
+              >
+                <GitPullRequestCreateArrow className="text-foreground" />
+                <p className="text-foreground">
+                  {t["pt-BR"].header.menu["Sign up"]}
+                </p>
+              </Link>
+            </SheetClose>
+          </SheetFooter>
         </SheetContent>
       </Sheet>
     </div>
