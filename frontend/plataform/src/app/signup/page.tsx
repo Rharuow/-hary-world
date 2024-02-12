@@ -10,18 +10,22 @@ import { Label } from "@/components/ui/label";
 
 import t from "@/i18n.json";
 
-const logingFormSchema = z.object({
+const signupgFormSchema = z.object({
   email: z
     .string()
-    .email({ message: t["pt-BR"].login.error["It's not a email format."] })
-    .min(1, { message: t["pt-BR"].login.error["This field is required."] }),
+    .email({ message: t["pt-BR"].signup.error["It's not a email format."] })
+    .min(1, { message: t["pt-BR"].signup.error["This field is required."] }),
   password: z
     .string()
-    .min(1, { message: t["pt-BR"].login.error["This field is required."] }),
+    .min(1, { message: t["pt-BR"].signup.error["This field is required."] }),
+  name: z
+    .string()
+    .min(1, { message: t["pt-BR"].signup.error["This field is required."] }),
 });
 
-interface ILoginForm {
+interface ISignUpForm {
   email: string;
+  name: string;
   password: string;
 }
 
@@ -30,11 +34,11 @@ export default function Login() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ILoginForm>({
-    resolver: zodResolver(logingFormSchema),
+  } = useForm<ISignUpForm>({
+    resolver: zodResolver(signupgFormSchema),
   });
 
-  const onSubmit = (data: ILoginForm) => {
+  const onSubmit = (data: ISignUpForm) => {
     console.log("data = ", data);
   };
 
@@ -42,15 +46,15 @@ export default function Login() {
     <main className="px-6">
       <Card className="px-3 py-5 mt-8 bg-primary flex flex-col gap-6">
         <p className="text-foreground text-lg text-center font-bold">
-          {t["pt-BR"].login.Login}
+          {t["pt-BR"].signup["Sign up"]}
         </p>
         <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="email">{t["pt-BR"].login.Email}</Label>
+            <Label htmlFor="email">{t["pt-BR"].signup.Email}</Label>
             <Input
               id="email"
               {...register("email")}
-              placeholder={t["pt-BR"].login["Type your email"]}
+              placeholder={t["pt-BR"].signup["Type your email"]}
             />
             {errors.email && errors.email.message && (
               <span className="text-red-400 text-xs">
@@ -59,12 +63,25 @@ export default function Login() {
             )}
           </div>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="password">{t["pt-BR"].login.Password}</Label>
+            <Label htmlFor="name">{t["pt-BR"].signup.Email}</Label>
+            <Input
+              id="name"
+              {...register("name")}
+              placeholder={t["pt-BR"].signup["Type your name"]}
+            />
+            {errors.name && errors.name.message && (
+              <span className="text-red-400 text-xs">
+                {errors.name.message}
+              </span>
+            )}
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="password">{t["pt-BR"].signup.Password}</Label>
             <Input
               id="password"
               {...register("password")}
               type="password"
-              placeholder={t["pt-BR"].login["Type your password"]}
+              placeholder={t["pt-BR"].signup["Type your password"]}
             />
             {errors.password && errors.password.message && (
               <span className="text-red-400 text-xs">
@@ -72,7 +89,7 @@ export default function Login() {
               </span>
             )}
           </div>
-          <Button>{t["pt-BR"].login.Enter}</Button>
+          <Button>{t["pt-BR"].signup.Create}</Button>
         </form>
       </Card>
     </main>
