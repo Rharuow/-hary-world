@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { Header } from "./header";
 import { Toaster } from "@/components/ui/toaster";
+import { TanstackProvider } from "@/components/providers/TanstackProvider";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -27,8 +28,10 @@ export default function RootLayout({
         }
         id="body"
       >
-        <Toaster />
-        <Header /> {children}
+        <TanstackProvider>
+          <Toaster />
+          <Header /> {children}
+        </TanstackProvider>
       </body>
     </html>
   );

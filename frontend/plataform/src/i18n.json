@@ -66,8 +66,8 @@
       "Type your name": "Digite seu nome",
       "Type your password": "Digite sua senha",
       "Create": "Cadastrar",
-      "Congratulations": "Parabéns",
-      "Registration completed successfully.": "Cadastro realizado com sucesso.",
+      "Verify your email": "Verifique seu email",
+      "We sent a email to your confirm your account": "Nós te enviamos um email para confirmar sua conta",
       "error": {
         "It's not a email format.": "Não é o formato de um email",
         "This field is required.": "Este campo não pode estar vazio.",
@@ -77,7 +77,11 @@
     },
     "confirmation": {
       "Congratulations": "Parabéns",
-      "Your account has been activated.": "Sua conta foi ativada."
+      "Your account has been activated.": "Sua conta foi ativada.",
+      "error": {
+        "Opss...": "Opss...",
+        "Something is wrong": "Alguma coisa esta errada."
+      }
     }
   }
 }
