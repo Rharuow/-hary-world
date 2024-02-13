@@ -9,6 +9,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 import t from "@/i18n.json";
+import { useToast } from "@/components/ui/use-toast";
+import { plataformApi } from "@/service/plataform";
 
 const signupgFormSchema = z.object({
   email: z
@@ -29,7 +31,7 @@ interface ISignUpForm {
   password: string;
 }
 
-export default function Login() {
+export default function SignUp() {
   const {
     register,
     handleSubmit,
@@ -38,8 +40,26 @@ export default function Login() {
     resolver: zodResolver(signupgFormSchema),
   });
 
-  const onSubmit = (data: ISignUpForm) => {
-    console.log("data = ", data);
+  const { toast } = useToast();
+
+  const onSubmit = async (data: ISignUpForm) => {
+    try {
+      await plataformApi.post("users/clients/signup", {
+        ...data,
+        roleId: process.env.NEXT_PUBLIC_ROLE_ID_CLIENT,
+      });
+      toast({
+        title: t["pt-BR"].signup.Congratulations,
+        description: t["pt-BR"].signup["Registration completed successfully."],
+      });
+    } catch (error) {
+      toast({
+        title: t["pt-BR"].signup.error["Opss..."],
+        description:
+          t["pt-BR"].signup.error["Something is wrong, try again later."],
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -63,7 +83,7 @@ export default function Login() {
             )}
           </div>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="name">{t["pt-BR"].signup.Email}</Label>
+            <Label htmlFor="name">{t["pt-BR"].signup.Name}</Label>
             <Input
               id="name"
               {...register("name")}
