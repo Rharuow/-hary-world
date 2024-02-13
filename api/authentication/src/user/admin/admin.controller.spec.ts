@@ -3,6 +3,7 @@ import { AdminController } from './admin.controller';
 import { AdminService } from './admin.service';
 import { PrismaService } from '@/prisma/prisma.service';
 import { Prisma, Role } from '@prisma/client';
+import { JwtService } from '@nestjs/jwt';
 
 describe('AdminController', () => {
   let controller: AdminController;
@@ -21,7 +22,7 @@ describe('AdminController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AdminController],
-      providers: [AdminService, PrismaService],
+      providers: [AdminService, PrismaService, JwtService],
     }).compile();
 
     controller = module.get<AdminController>(AdminController);

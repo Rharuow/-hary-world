@@ -6,18 +6,12 @@ import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { ClientController } from './client/client.controller';
 import { ClientService } from './client/client.service';
-import { APP_GUARD } from '@nestjs/core';
-import { AuthGuard } from '@/auth/auth.guard';
+import { MailModule } from '@/mail/mail.module';
 
 @Module({
+  imports: [MailModule],
   controllers: [ClientController, AdminController, UserController],
-  providers: [
-    AdminService,
-    PrismaService,
-    UserService,
-    ClientService,
-    { provide: APP_GUARD, useClass: AuthGuard },
-  ],
+  providers: [AdminService, PrismaService, UserService, ClientService],
   exports: [UserService],
 })
 export class UserModule {}
