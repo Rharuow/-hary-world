@@ -1,10 +1,13 @@
 import {
+  Body,
   Controller,
   Delete,
   Get,
+  HttpCode,
   HttpException,
   HttpStatus,
   Param,
+  Patch,
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
@@ -60,6 +63,26 @@ export class UserController {
       if (isRootUser && isRootUser.role.name === 'ROOT')
         throw new Error('Root user cannot be deleted');
       return await this.userService.deleteUser(params.id);
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.FORBIDDEN,
+          error: error.message,
+        },
+        HttpStatus.FORBIDDEN,
+        {
+          cause: error,
+        },
+      );
+    }
+  }
+
+  @Patch('/confirmation')
+  @HttpCode(204)
+  async confirmationUser(@Body() data: { id: string }) {
+    try {
+      await this.userService.confirmation(data.id);
+      return;
     } catch (error) {
       throw new HttpException(
         {

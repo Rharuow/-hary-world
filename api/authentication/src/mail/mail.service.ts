@@ -7,7 +7,7 @@ export class MailService {
   constructor(private mailerService: MailerService) {}
 
   async sendUserConfirmation(user: Pick<User, 'name' | 'email' | 'id'>) {
-    const url = process.env.PLATAFORM_URL + `/confirmation?toke=${user.id}`;
+    const url = process.env.PLATAFORM_URL + `/confirmation?token=${user.id}`;
 
     await this.mailerService.sendMail({
       to: user.email,
