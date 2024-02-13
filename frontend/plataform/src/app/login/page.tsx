@@ -72,7 +72,7 @@ export default function Login() {
               </span>
             )}
           </div>
-          <Button>{t["pt-BR"].login.Enter}</Button>
+          <Button variant="secondary">{t["pt-BR"].login.Enter}</Button>
         </form>
       </Card>
     </main>

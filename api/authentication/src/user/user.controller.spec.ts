@@ -3,6 +3,7 @@ import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { PrismaService } from '@/prisma/prisma.service';
 import { Role, User } from '@prisma/client';
+import { JwtService } from '@nestjs/jwt';
 
 describe('UserController', () => {
   let userController: UserController;
@@ -15,7 +16,7 @@ describe('UserController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UserController],
-      providers: [UserService, PrismaService],
+      providers: [UserService, PrismaService, JwtService],
     }).compile();
 
     userController = module.get<UserController>(UserController);

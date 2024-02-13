@@ -47,13 +47,14 @@ export class Seed {
     try {
       const rootUser = await this.prismaService.user.findUnique({
         where: {
-          name: String(process.env.ROOT_USER_NAME),
+          email: String(process.env.ROOT_USER_EMAIL),
         },
       });
       if (rootUser) return;
       return await this.prismaService.user.create({
         data: {
           name: String(process.env.ROOT_USER_NAME),
+          email: String(process.env.ROOT_USER_EMAIL),
           password: String(process.env.ROOT_USER_PASSWORD),
           roleId: String(this.roleRootId),
         },

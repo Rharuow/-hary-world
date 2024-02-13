@@ -8,14 +8,17 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { ClientService } from './client.service';
 import { Prisma } from '@prisma/client';
+import { AuthGuard } from '@/auth/auth.guard';
 
 @Controller('users')
 export class ClientController {
   constructor(private readonly clientService: ClientService) {}
 
+  @UseGuards(AuthGuard)
   @Post('/clients')
   @HttpCode(204)
   async createClient(
@@ -40,6 +43,31 @@ export class ClientController {
     }
   }
 
+  @Post('/clients/signup')
+  @HttpCode(204)
+  async singUp(
+    @Body()
+    data: Prisma.ClientCreateInput &
+      Prisma.UserCreateInput & { roleId: string },
+  ) {
+    try {
+      await this.clientService.createClient(data);
+      return;
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.UNPROCESSABLE_ENTITY,
+          error: error.message,
+        },
+        HttpStatus.UNPROCESSABLE_ENTITY,
+        {
+          cause: error,
+        },
+      );
+    }
+  }
+
+  @UseGuards(AuthGuard)
   @Get('/clients')
   async listClient() {
     try {
@@ -58,6 +86,7 @@ export class ClientController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Get('/:id/clients/:clientId')
   async getClient(@Param() { clientId, id }: { id: string; clientId: string }) {
     try {
@@ -76,6 +105,7 @@ export class ClientController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Put('/:id/clients/:clientId')
   @HttpCode(204)
   async updateClient(

@@ -16,7 +16,7 @@ export const Introduction = () => {
       ref={ref}
     >
       <p
-        className={cn("text-foreground font-semibold duration-[100ms]", {
+        className={cn("text-foreground font-semibold", {
           "animate-coming-from-the-left": inView,
         })}
       >
@@ -27,12 +27,9 @@ export const Introduction = () => {
         }
       </p>
       <p
-        className={cn(
-          "text-right text-foreground font-semibold duration-[500ms]",
-          {
-            "animate-coming-from-the-rigth": inView,
-          }
-        )}
+        className={cn("text-right text-foreground font-semibold", {
+          "animate-coming-from-the-rigth": inView,
+        })}
       >
         {
           t["pt-BR"].home.introduction[
@@ -41,7 +38,7 @@ export const Introduction = () => {
         }
       </p>
       <p
-        className={cn("text-foreground font-semibold  duration-[900ms]", {
+        className={cn("text-foreground font-semibold", {
           "animate-coming-from-the-left": inView,
         })}
       >
@@ -52,12 +49,9 @@ export const Introduction = () => {
         }
       </p>
       <p
-        className={cn(
-          "text-right text-foreground font-semibold duration-[1400ms]",
-          {
-            "animate-coming-from-the-rigth": inView,
-          }
-        )}
+        className={cn("text-right text-foreground font-semibold", {
+          "animate-coming-from-the-rigth": inView,
+        })}
       >
         {
           t["pt-BR"].home.introduction[
@@ -66,7 +60,7 @@ export const Introduction = () => {
         }
       </p>
       <p
-        className={cn("text-foreground font-semibold duration-[1800ms]", {
+        className={cn("text-foreground font-semibold", {
           "animate-coming-from-the-left": inView,
         })}
       >

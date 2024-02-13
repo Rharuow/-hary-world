@@ -7,6 +7,7 @@ import {
   userInMemory,
   usersInMemory,
 } from '@/libs/memory-cache';
+import { MailService } from '@/mail/mail.service';
 import { PrismaService } from '@/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
@@ -20,7 +21,11 @@ export class ClientService {
     client: { select: { id: true, phone: true } },
     role: { select: { id: true, name: true } },
   };
-  constructor(private readonly prisma: PrismaService) {}
+
+  constructor(
+    private readonly prisma: PrismaService,
+    private mailService: MailService,
+  ) {}
 
   async createClient(
     data: Prisma.ClientCreateInput &
@@ -33,7 +38,7 @@ export class ClientService {
     clientInMemory.clear();
     clientsInMemory.clear();
     try {
-      return await this.prisma.user.create({
+      const client = await this.prisma.user.create({
         data: {
           name: data.name,
           email: data.email,
@@ -46,6 +51,12 @@ export class ClientService {
           },
         },
       });
+      await this.mailService.sendUserConfirmation({
+        email: client.email,
+        name: client.name,
+        id: client.id,
+      });
+      return client;
     } catch (error) {
       throw new Error(error);
     }

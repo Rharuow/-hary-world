@@ -43,7 +43,7 @@ export class AdminService {
       adminsInMemory.clear();
       clientInMemory.clear();
       clientsInMemory.clear();
-      return await this.prisma.user.create({
+      const admin = await this.prisma.user.create({
         data: {
           name: data.name,
           password: encodeSha256(data.password),
@@ -56,6 +56,8 @@ export class AdminService {
           },
         },
       });
+
+      return admin;
     } catch (error) {
       throw new Error(error);
     }

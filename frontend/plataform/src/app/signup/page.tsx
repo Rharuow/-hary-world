@@ -9,6 +9,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 import t from "@/i18n.json";
+import { useToast } from "@/components/ui/use-toast";
+import { plataformApi } from "@/service/plataform";
+import { useState } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { ToastAction } from "@/components/ui/toast";
+import { useRouter } from "next/navigation";
 
 const signupgFormSchema = z.object({
   email: z
@@ -29,7 +35,7 @@ interface ISignUpForm {
   password: string;
 }
 
-export default function Login() {
+export default function SignUp() {
   const {
     register,
     handleSubmit,
@@ -38,24 +44,70 @@ export default function Login() {
     resolver: zodResolver(signupgFormSchema),
   });
 
-  const onSubmit = (data: ISignUpForm) => {
-    console.log("data = ", data);
+  const router = useRouter();
+
+  const [loading, setLoading] = useState(false);
+
+  const { toast } = useToast();
+
+  const onSubmit = async (data: ISignUpForm) => {
+    setLoading(true);
+    try {
+      await plataformApi.post("users/clients/signup", {
+        ...data,
+        roleId: process.env.NEXT_PUBLIC_ROLE_ID_CLIENT,
+      });
+      toast({
+        title: t["pt-BR"].signup["Verify your email"],
+        description:
+          t["pt-BR"].signup["We sent a email to your confirm your account"],
+        action: (
+          <ToastAction
+            altText="ok"
+            onClick={() => {
+              router.replace("/");
+            }}
+          >
+            Ok
+          </ToastAction>
+        ),
+      });
+    } catch (error) {
+      toast({
+        title: t["pt-BR"].signup.error["Opss..."],
+        description:
+          t["pt-BR"].signup.error["Something is wrong, try again later."],
+        variant: "destructive",
+      });
+    }
   };
 
   return (
     <main className="px-6">
       <Card className="px-3 py-5 mt-8 bg-primary flex flex-col gap-6">
-        <p className="text-foreground text-lg text-center font-bold">
-          {t["pt-BR"].signup["Sign up"]}
-        </p>
+        {loading ? (
+          <Skeleton className="w-28 self-center h-4" />
+        ) : (
+          <p className="text-foreground text-lg text-center font-bold">
+            {t["pt-BR"].signup["Sign up"]}
+          </p>
+        )}
         <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="email">{t["pt-BR"].signup.Email}</Label>
-            <Input
-              id="email"
-              {...register("email")}
-              placeholder={t["pt-BR"].signup["Type your email"]}
-            />
+            {loading ? (
+              <Skeleton className="h-3" />
+            ) : (
+              <Label htmlFor="email">{t["pt-BR"].signup.Email}</Label>
+            )}
+            {loading ? (
+              <Skeleton className="h-10" />
+            ) : (
+              <Input
+                id="email"
+                {...register("email")}
+                placeholder={t["pt-BR"].signup["Type your email"]}
+              />
+            )}
             {errors.email && errors.email.message && (
               <span className="text-red-400 text-xs">
                 {errors.email.message}
@@ -63,12 +115,20 @@ export default function Login() {
             )}
           </div>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="name">{t["pt-BR"].signup.Email}</Label>
-            <Input
-              id="name"
-              {...register("name")}
-              placeholder={t["pt-BR"].signup["Type your name"]}
-            />
+            {loading ? (
+              <Skeleton className="h-3" />
+            ) : (
+              <Label htmlFor="name">{t["pt-BR"].signup.Name}</Label>
+            )}
+            {loading ? (
+              <Skeleton className="h-10" />
+            ) : (
+              <Input
+                id="name"
+                {...register("name")}
+                placeholder={t["pt-BR"].signup["Type your name"]}
+              />
+            )}
             {errors.name && errors.name.message && (
               <span className="text-red-400 text-xs">
                 {errors.name.message}
@@ -76,20 +136,30 @@ export default function Login() {
             )}
           </div>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="password">{t["pt-BR"].signup.Password}</Label>
-            <Input
-              id="password"
-              {...register("password")}
-              type="password"
-              placeholder={t["pt-BR"].signup["Type your password"]}
-            />
+            {loading ? (
+              <Skeleton className="h-3" />
+            ) : (
+              <Label htmlFor="password">{t["pt-BR"].signup.Password}</Label>
+            )}
+            {loading ? (
+              <Skeleton className="h-10" />
+            ) : (
+              <Input
+                id="password"
+                {...register("password")}
+                type="password"
+                placeholder={t["pt-BR"].signup["Type your password"]}
+              />
+            )}
             {errors.password && errors.password.message && (
               <span className="text-red-400 text-xs">
                 {errors.password.message}
               </span>
             )}
           </div>
-          <Button>{t["pt-BR"].signup.Create}</Button>
+          <Button variant="secondary" disabled={loading}>
+            {t["pt-BR"].signup.Create}
+          </Button>
         </form>
       </Card>
     </main>
