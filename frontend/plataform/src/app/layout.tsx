@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
+import { CookiesProvider } from "next-client-cookies/server";
+
 import "./globals.css";
 import { Header } from "./header";
 import { Toaster } from "@/components/ui/toaster";
@@ -28,10 +30,12 @@ export default function RootLayout({
         }
         id="body"
       >
-        <TanstackProvider>
-          <Toaster />
-          <Header /> {children}
-        </TanstackProvider>
+        <CookiesProvider>
+          <TanstackProvider>
+            <Toaster />
+            <Header /> {children}
+          </TanstackProvider>
+        </CookiesProvider>
       </body>
     </html>
   );
