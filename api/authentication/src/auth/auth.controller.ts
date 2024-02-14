@@ -22,7 +22,7 @@ export class AuthController {
   ) {}
 
   @HttpCode(HttpStatus.OK)
-  @Post('sing-in')
+  @Post('sign-in')
   async singIn(@Body() signIn: SignInDto) {
     try {
       return await this.authService.signIn({

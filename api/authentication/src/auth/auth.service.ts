@@ -1,4 +1,4 @@
-import { encodeSha256 } from '@/libs/bcrypt';
+import { compare } from '@/libs/bcrypt';
 import { UserService } from '@/user/user.service';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -20,10 +20,9 @@ export class AuthService {
   }) {
     const user = await this.userService.findUserByEmail(email, true);
 
-    if (user?.password !== encodeSha256(inputPassword))
-      throw new UnauthorizedException();
+    if (user && compare(inputPassword)) throw new UnauthorizedException();
 
-    const payload = { email: user.email, id: user.id, role: user.role };
+    const payload = { email: user?.email, id: user?.id, role: user?.role };
 
     return {
       access_token: await this.jwtService.signAsync(payload),
