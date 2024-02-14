@@ -93,7 +93,6 @@ export class UserService {
             where: { email },
             select,
           }),
-
           process.env.NODE_ENV === 'test' ? 5 : 3600 * 24, // if test env expire in 5 miliseconds else 1 day
         );
       }

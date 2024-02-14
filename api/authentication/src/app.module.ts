@@ -6,9 +6,10 @@ import { Seed } from './utils/seed';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { MailModule } from './mail/mail.module';
+import { RoleModule } from './role/role.module';
 
 @Module({
-  imports: [UserModule, AuthModule, MailModule],
+  imports: [UserModule, AuthModule, MailModule, RoleModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })
