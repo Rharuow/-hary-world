@@ -1,5 +1,9 @@
 {
   "pt-BR": {
+    "general": {
+      "We are building this page": "Estamos construindo essa página",
+      "See example": "Ver Exemplo"
+    },
     "header": {
       "Web Development": "Desenvolvimento Web",
       "menu": {
@@ -85,6 +89,7 @@
         "Opss...": "Opss...",
         "Something is wrong": "Alguma coisa está errada."
       }
-    }
+    },
+    "dashboard": {}
   }
 }
