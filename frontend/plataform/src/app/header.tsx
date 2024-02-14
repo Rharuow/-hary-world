@@ -5,7 +5,9 @@ import {
   GitPullRequestCreateArrow,
   Home,
   LogIn,
+  LogOut,
 } from "lucide-react";
+import { useCookies } from "next-client-cookies";
 
 import { Image } from "@/components/ui/image";
 import {
@@ -18,12 +20,23 @@ import {
 
 import t from "@/i18n.json";
 import { cn } from "@/lib/utils";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
 
 export const Header = () => {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const cookies = useCookies();
+
+  const session = cookies.get("session");
+
+  const handleLogout = () => {
+    cookies.remove("session");
+    router.replace("/");
+  };
 
   return (
     <div className="bg-primary-dark px-6 py-3 rounded-b-lg shadow flex items-center sticky top-0 z-10">
@@ -65,7 +78,7 @@ export const Header = () => {
               </Link>
             </SheetClose>
           </div>
-          <Separator />
+          <Separator className="bg-foreground" />
           <SheetFooter className="flex-col">
             <SheetClose asChild>
               <Link
@@ -93,6 +106,24 @@ export const Header = () => {
                 </p>
               </Link>
             </SheetClose>
+            {session && (
+              <div className="flex flex-col justify-around gap-4">
+                <Separator className="bg-foreground" />
+                <SheetClose asChild>
+                  <Button
+                    onClick={() => handleLogout()}
+                    className={cn("flex gap-2 p-2 rounded-lg bg-red-500", {
+                      "bg-primary": pathname === "/signup",
+                    })}
+                  >
+                    <LogOut className="text-foreground" />
+                    <p className="text-foreground">
+                      {t["pt-BR"].header.menu["Sign out"]}
+                    </p>
+                  </Button>
+                </SheetClose>
+              </div>
+            )}
           </SheetFooter>
         </SheetContent>
       </Sheet>

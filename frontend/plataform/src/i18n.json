@@ -6,6 +6,7 @@
         "Home": "Home",
         "Products": "Produtos",
         "Login": "Login",
+        "Sign out": "Sair",
         "Sign up": "Cadastre-se"
       }
     },
@@ -54,7 +55,9 @@
       "Enter": "Entrar",
       "error": {
         "It's not a email format.": "Não é o formato de um email",
-        "This field is required.": "Este campo não pode estar vazio."
+        "This field is required.": "Este campo não pode estar vazio.",
+        "Opss...": "Opss...",
+        "Something is wrong": "Alguma coisa está errada."
       }
     },
     "signup": {
@@ -80,7 +83,7 @@
       "Your account has been activated.": "Sua conta foi ativada.",
       "error": {
         "Opss...": "Opss...",
-        "Something is wrong": "Alguma coisa esta errada."
+        "Something is wrong": "Alguma coisa está errada."
       }
     }
   }
