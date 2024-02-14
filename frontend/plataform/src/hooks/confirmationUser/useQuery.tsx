@@ -10,7 +10,5 @@ export const useConfirmationUser = (id: string) =>
   });
 
 const confirmationUser = async (id: string) => {
-  console.log("id", id);
-
   return await plataformApi.patch("/users/confirmation", { id });
 };
