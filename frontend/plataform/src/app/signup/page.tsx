@@ -15,6 +15,7 @@ import { useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ToastAction } from "@/components/ui/toast";
 import { useRouter } from "next/navigation";
+import { useFindRoleByName } from "@/hooks/role/useFindRoleByName";
 
 const signupgFormSchema = z.object({
   email: z
@@ -44,6 +45,8 @@ export default function SignUp() {
     resolver: zodResolver(signupgFormSchema),
   });
 
+  const { data: role } = useFindRoleByName("CLIENT");
+
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
@@ -55,7 +58,7 @@ export default function SignUp() {
     try {
       await plataformApi.post("users/clients/signup", {
         ...data,
-        roleId: process.env.NEXT_PUBLIC_ROLE_ID_CLIENT,
+        roleId: role?.data.id,
       });
       toast({
         title: t["pt-BR"].signup["Verify your email"],
@@ -72,6 +75,7 @@ export default function SignUp() {
           </ToastAction>
         ),
       });
+      router.replace("/");
     } catch (error) {
       toast({
         title: t["pt-BR"].signup.error["Opss..."],

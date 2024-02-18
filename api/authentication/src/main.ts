@@ -3,6 +3,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
+  console.log(process.env.DATABASE_URL);
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     abortOnError: false,
   }); /* to make it throw an error instead of exit with the code 1 */
