@@ -8,7 +8,7 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "npx prisma migrate deploy && node dist/main",
+    "start": "echo 'TESTANDO PRESTART' && npx prisma migrate deploy && node dist/main",
     "start:dev": "nest start --watch -b swc",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
