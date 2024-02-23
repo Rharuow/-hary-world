@@ -25,8 +25,8 @@ export default function SignUp() {
           name="password-confirmation"
         />
         <Button
-          variant="secondary"
-          className="text-secondary-foreground font-bold"
+          variant={"secondary"}
+          className="text-secondary-foreground font-bold focus:bg-secondary-dark focus:text-white"
           type="button"
         >
           Enviar Cadastro
