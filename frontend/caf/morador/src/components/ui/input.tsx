@@ -17,7 +17,7 @@ const Input = React.forwardRef<
         id={props.id || props.name}
         type={type}
         className={cn(
-          "flex h-10 w-full border z-10 border-input rounded-full bg-transparent px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+          "flex h-10 w-full border z-10 border-input rounded-full text-white bg-transparent px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
           className
         )}
         onFocus={(event) => {

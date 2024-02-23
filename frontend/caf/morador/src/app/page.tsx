@@ -8,7 +8,7 @@ export default function Home() {
       <Image alt="CAF's logo" src="/products/caf-logo.png" className="w-52" />
 
       <form className="flex flex-col gap-4">
-        <Input label="Email" name="email" />
+        <Input label="Email" name="email" type="email" />
         <Input label="Password" type="password" name="password" />
         <Button
           variant="secondary"
