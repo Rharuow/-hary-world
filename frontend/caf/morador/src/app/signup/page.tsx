@@ -20,10 +20,15 @@ export default function SignUp() {
         <Button
           variant="secondary"
           className="text-secondary-foreground font-bold"
+          type="button"
         >
           Cadastrar
         </Button>
       </form>
+
+      <Link href="/" className="text-white underline text-center z-10">
+        Login
+      </Link>
 
       <Image
         alt="sprite decoration"
