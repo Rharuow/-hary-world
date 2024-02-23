@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Image } from "@/components/ui/image";
 import { Input } from "@/components/ui/input";
 
-export default function Login() {
+export default function SignUp() {
   return (
     <main className="min-h-screen bg-[radial-gradient(circle_at_top_left,_var(--tw-gradient-stops))] from-secondary to-primary flex flex-col items-center justify-center gap-8">
       <Image alt="CAF's logo" src="/products/caf-logo.png" className="w-52" />
@@ -12,22 +12,18 @@ export default function Login() {
       <form className="flex flex-col gap-4 z-10">
         <Input label="Email" name="email" type="email" />
         <Input label="Senha" type="password" name="password" />
+        <Input
+          label="Confirme a senha"
+          type="password"
+          name="password-confirmation"
+        />
         <Button
           variant="secondary"
           className="text-secondary-foreground font-bold"
         >
-          Entrar
+          Cadastrar
         </Button>
       </form>
-
-      <div className="flex flex-col gap-3 z-10">
-        <Link href="/" className="text-white underline text-center">
-          Esqueci minha senha
-        </Link>
-        <Link href="/signup" className="text-white underline text-center">
-          Cadastre-se
-        </Link>
-      </div>
 
       <Image
         alt="sprite decoration"
