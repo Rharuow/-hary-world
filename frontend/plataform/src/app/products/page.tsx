@@ -1,5 +1,6 @@
 "use client";
 import Lottie from "lottie-react";
+import { useRouter } from "next/navigation";
 
 import {
   Accordion,
@@ -7,6 +8,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+
 import { Image } from "@/components/ui/image";
 
 import building from "@/../public/animation/building.json";
@@ -17,8 +19,13 @@ import { Button } from "@/components/ui/button";
 
 export default function Products() {
   const cookies = useCookies();
+  const router = useRouter();
 
   const session = cookies.get("session");
+
+  const handleSeeExample = () => {
+    router.push(String(process.env.NEXT_PUBLIC_CAF_URL));
+  };
 
   return (
     <main className="flex flex-col px-4 py-6">
@@ -36,11 +43,15 @@ export default function Products() {
             <p className="font-semibold text-foreground text-justify">
               {t["pt-BR"].products.CAF.description}
             </p>
-            {session && (
-              <Button variant="secondary" className="font-semibold">
-                {t["pt-BR"].general["See example"]}
-              </Button>
-            )}
+            <Button
+              variant="secondary"
+              className="font-semibold"
+              onClick={() => {
+                session ? handleSeeExample() : router.push("/login");
+              }}
+            >
+              {t["pt-BR"].general["See example"]}
+            </Button>
           </AccordionContent>
         </AccordionItem>
 
