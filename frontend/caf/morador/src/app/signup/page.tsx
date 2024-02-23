@@ -6,11 +6,18 @@ import { Input } from "@/components/ui/input";
 
 export default function SignUp() {
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top_left,_var(--tw-gradient-stops))] from-secondary to-primary flex flex-col items-center justify-center gap-8">
-      <Image alt="CAF's logo" src="/products/caf-logo.png" className="w-52" />
+    <main className="min-h-screen bg-primary relative flex flex-col items-center justify-center gap-8 p-8">
+      <Image alt="CAF's logo" src="/house.png" className="w-52" />
 
       <form className="flex flex-col gap-4 z-10">
+        <Input label="Nome completo" name="name" />
+        <Input label="CPF" inputMode="numeric" name="cpf" />
         <Input label="Email" name="email" type="email" />
+        <Input label="Telefone" name="phone" />
+        <div className="grid grid-cols-2 gap-2">
+          <Input label="Bloco" name="square" />
+          <Input label="Casa" name="house" />
+        </div>
         <Input label="Senha" type="password" name="password" />
         <Input
           label="Confirme a senha"
@@ -22,12 +29,12 @@ export default function SignUp() {
           className="text-secondary-foreground font-bold"
           type="button"
         >
-          Cadastrar
+          Enviar Cadastro
         </Button>
       </form>
 
       <Link href="/" className="text-white underline text-center z-10">
-        Login
+        Entrar
       </Link>
 
       <Image
