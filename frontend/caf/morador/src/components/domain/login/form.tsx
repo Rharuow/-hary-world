@@ -51,7 +51,7 @@ export const FormLogin = () => {
           })}
         />
         {errors && errors.email && (
-          <span className="text-xs text-red-800 font-bold">
+          <span className="text-xs text-red-700 font-bold">
             {errors.email.message}
           </span>
         )}
@@ -66,7 +66,7 @@ export const FormLogin = () => {
           })}
         />
         {errors && errors.password && (
-          <span className="text-xs text-red-800 font-bold">
+          <span className="text-xs text-red-700 font-bold">
             {errors.password.message}
           </span>
         )}
@@ -74,7 +74,7 @@ export const FormLogin = () => {
 
       <Button
         variant="secondary"
-        className="text-secondary-foreground font-bold focus:bg-secondary-dark focus:text-white"
+        className="text-secondary-foreground font-bold focus:bg-secondary-dark focus:text-white hover:bg-secondary-dark hover:text-white"
       >
         Entrar
       </Button>
