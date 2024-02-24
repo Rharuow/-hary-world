@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/components/ui/use-toast";
+import { getCookie, setCookie } from "cookies-next";
 
 interface ILoginForm {
   email: string;
@@ -42,7 +43,16 @@ export const FormLogin = () => {
 
   const onSubmit = (data: ILoginForm) => {
     if (data.email === "test@test.com" && data.password === "123123123") {
-      router.replace("/home");
+      setCookie("session", {
+        name: "Test",
+        email: "test@test.com",
+        phone: "(84) 00000-0000",
+        image:
+          "https://cdn3.vectorstock.com/i/1000x1000/30/97/flat-business-man-user-profile-avatar-icon-vector-4333097.jpg",
+        bloco: "1",
+        casa: "1",
+      });
+      getCookie("session") && router.replace("/home");
     } else {
       toast({
         title: "Opss...",
