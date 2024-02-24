@@ -1,4 +1,5 @@
 "use client";
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,6 +16,7 @@ import { cpfMask } from "@/utils/mask/cpf";
 import { phoneMask } from "@/utils/mask/phone";
 import { cpfIsValid } from "@/utils/validation/cpf";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -35,13 +37,11 @@ const schema = z
     name: z.string().min(4, { message: "Pelo menos 4 caracteres" }),
     cpf: z.string().length(14, { message: "CPF inválido" }),
     email: z.string().email("Email inválido"),
-    phone: z.string().length(13, { message: "Telefone inválido" }),
+    phone: z.string().length(15, { message: "Telefone inválido" }),
     square: z.string().min(1, { message: "Quadra inválida" }),
     house: z.string().min(1, { message: "Casa inválida" }),
-    password: z.string().length(6, { message: "Pelo menos 6 caracteres" }),
-    confirmPassword: z
-      .string()
-      .length(6, { message: "Pelo menos 6 caracteres" }),
+    password: z.string().min(6, { message: "Pelo menos 6 caracteres" }),
+    confirmPassword: z.string().min(6, { message: "Pelo menos 6 caracteres" }),
   })
   .refine(
     (values) => {
@@ -62,6 +62,7 @@ export const FormSignup = () => {
   } = useForm<ISignUpForm>({
     resolver: zodResolver(schema),
   });
+  const router = useRouter();
 
   const [openDialog, setOpenDialog] = useState(false);
   const [cpfIsInvalid, setCpfIsInvalid] = useState(false);
@@ -70,8 +71,6 @@ export const FormSignup = () => {
     console.log(data);
     setOpenDialog(true);
   };
-
-  console.log(errors);
 
   return (
     <form
@@ -90,7 +89,14 @@ export const FormSignup = () => {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogAction>Ok</AlertDialogAction>
+            <AlertDialogAction
+              onClick={() => {
+                setOpenDialog(false);
+                router.replace("/");
+              }}
+            >
+              Ok
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
