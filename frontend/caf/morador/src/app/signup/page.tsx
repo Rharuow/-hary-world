@@ -7,7 +7,7 @@ import { FormSignup } from "@/components/domain/signup/form";
 
 export default function SignUp() {
   return (
-    <main className="min-h-screen bg-primary relative flex flex-col items-center justify-center gap-8 p-8">
+    <main className="min-h-svh bg-primary relative flex flex-col items-center justify-center gap-8 p-8">
       <Image alt="CAF's logo" src="/house.png" className="w-52" />
 
       <FormSignup />
