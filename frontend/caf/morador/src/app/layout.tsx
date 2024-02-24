@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Exo_2 } from "next/font/google";
 import "./globals.css";
 
+import { Toaster } from "@/components/ui/toaster";
+
 const exo2 = Exo_2({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -16,7 +18,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={exo2.className}>{children}</body>
+      <body className={exo2.className}>
+        {children}
+        <Toaster />
+      </body>
     </html>
   );
 }

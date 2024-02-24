@@ -3,11 +3,13 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Eye, EyeOff } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { Eye, EyeOff } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 
 interface ILoginForm {
   email: string;
@@ -35,11 +37,20 @@ export const FormLogin = () => {
     "password"
   );
 
-  const onSubmit = (data: ILoginForm) => {
-    console.log(data);
-  };
+  const router = useRouter();
+  const { toast } = useToast();
 
-  console.log(errors);
+  const onSubmit = (data: ILoginForm) => {
+    if (data.email === "test@test.com" && data.password === "123123123") {
+      router.replace("/home");
+    } else {
+      toast({
+        title: "Opss...",
+        description: "Email ou senha inválidos",
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
     <form
