@@ -1,8 +1,21 @@
 "use client";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { cpfMask } from "@/utils/mask/cpf";
+import { phoneMask } from "@/utils/mask/phone";
+import { cpfIsValid } from "@/utils/validation/cpf";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -45,12 +58,17 @@ export const FormSignup = () => {
     handleSubmit,
     register,
     formState: { errors },
+    setValue,
   } = useForm<ISignUpForm>({
     resolver: zodResolver(schema),
   });
 
+  const [openDialog, setOpenDialog] = useState(false);
+  const [cpfIsInvalid, setCpfIsInvalid] = useState(false);
+
   const onSubmit = (data: ISignUpForm) => {
     console.log(data);
+    setOpenDialog(true);
   };
 
   console.log(errors);
@@ -60,6 +78,22 @@ export const FormSignup = () => {
       className="flex flex-col gap-4 z-10"
       onSubmit={handleSubmit(onSubmit)}
     >
+      <AlertDialog open={openDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Seu cadastro foi enviado com sucesso!
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              A administração irá liberar seu acesso ao aplicativo em breve.
+              Fique atento ao contato da administração.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction>Ok</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
       <div className="flex flex-col gap-1">
         <Input
           label="Nome completo"
@@ -78,15 +112,29 @@ export const FormSignup = () => {
         <Input
           label="CPF"
           inputMode="numeric"
-          {...register("cpf")}
+          {...register("cpf", {
+            onChange: (event) => {
+              setValue("cpf", cpfMask(event.target.value));
+            },
+            onBlur: (event) => {
+              console.log(cpfIsValid(event.target.value));
+              setCpfIsInvalid(!cpfIsValid(event.target.value));
+            },
+          })}
           className={cn({
-            "border border-red-700": errors && errors.email,
+            "border border-red-700": (errors && errors.cpf) || cpfIsInvalid,
           })}
         />
-        {errors && errors.cpf && (
+        {errors && errors.cpf ? (
           <span className="text-xs text-red-400 font-bold">
             {errors.cpf.message}
           </span>
+        ) : (
+          cpfIsInvalid && (
+            <span className="text-xs text-red-400 font-bold">
+              Números inválidos
+            </span>
+          )
         )}
       </div>
       <div className="flex flex-col gap-1">
@@ -107,9 +155,15 @@ export const FormSignup = () => {
       <div className="flex flex-col gap-1">
         <Input
           label="Telefone"
-          {...register("phone")}
+          inputMode="numeric"
+          maxLength={11}
+          {...register("phone", {
+            onChange: (event) => {
+              setValue("phone", phoneMask(event.target.value));
+            },
+          })}
           className={cn({
-            "border border-red-700": errors && errors.email,
+            "border border-red-700": errors && errors.phone,
           })}
         />
         {errors && errors.phone && (
@@ -124,7 +178,7 @@ export const FormSignup = () => {
             label="Bloco"
             {...register("square")}
             className={cn({
-              "border border-red-700": errors && errors.email,
+              "border border-red-700": errors && errors.square,
             })}
           />
           {errors && errors.square && (
@@ -138,7 +192,7 @@ export const FormSignup = () => {
             label="Casa"
             {...register("house")}
             className={cn({
-              "border border-red-700": errors && errors.email,
+              "border border-red-700": errors && errors.house,
             })}
           />
           {errors && errors.house && (
@@ -154,7 +208,7 @@ export const FormSignup = () => {
           type="password"
           {...register("password")}
           className={cn({
-            "border border-red-700": errors && errors.email,
+            "border border-red-700": errors && errors.password,
           })}
         />
         {errors && errors.password && (
@@ -169,7 +223,7 @@ export const FormSignup = () => {
           type="password"
           {...register("confirmPassword")}
           className={cn({
-            "border border-red-700": errors && errors.email,
+            "border border-red-700": errors && errors.confirmPassword,
           })}
         />
         {errors && errors.confirmPassword && (
