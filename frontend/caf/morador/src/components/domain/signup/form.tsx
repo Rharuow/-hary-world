@@ -1,4 +1,9 @@
 "use client";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { Eye, EyeOff } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { z } from "zod";
 
 import {
   AlertDialog,
@@ -16,10 +21,6 @@ import { cpfMask } from "@/utils/mask/cpf";
 import { phoneMask } from "@/utils/mask/phone";
 import { cpfIsValid } from "@/utils/validation/cpf";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 interface ISignUpForm {
   name: string;
@@ -66,6 +67,12 @@ export const FormSignup = () => {
 
   const [openDialog, setOpenDialog] = useState(false);
   const [cpfIsInvalid, setCpfIsInvalid] = useState(false);
+  const [passworType, setPassworType] = useState<"password" | "text">(
+    "password"
+  );
+  const [confirmPassworType, setConfirmPassworType] = useState<
+    "password" | "text"
+  >("password");
 
   const onSubmit = (data: ISignUpForm) => {
     console.log(data);
@@ -211,11 +218,17 @@ export const FormSignup = () => {
       <div className="flex flex-col gap-1">
         <Input
           label="Senha"
-          type="password"
+          type={passworType}
           {...register("password")}
           className={cn({
             "border border-red-700": errors && errors.password,
           })}
+          Icon={() => (passworType === "password" ? <Eye /> : <EyeOff />)}
+          iconAction={() => {
+            setPassworType((prev) =>
+              prev === "password" ? "text" : "password"
+            );
+          }}
         />
         {errors && errors.password && (
           <span className="text-xs text-red-400 font-bold">
@@ -226,11 +239,19 @@ export const FormSignup = () => {
       <div className="flex flex-col gap-1">
         <Input
           label="Confirme a senha"
-          type="password"
+          type={confirmPassworType}
           {...register("confirmPassword")}
           className={cn({
             "border border-red-700": errors && errors.confirmPassword,
           })}
+          Icon={() =>
+            confirmPassworType === "password" ? <Eye /> : <EyeOff />
+          }
+          iconAction={() => {
+            setConfirmPassworType((prev) =>
+              prev === "password" ? "text" : "password"
+            );
+          }}
         />
         {errors && errors.confirmPassword && (
           <span className="text-xs text-red-400 font-bold">

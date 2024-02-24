@@ -1,11 +1,13 @@
 "use client";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
-import { Resolver, useForm } from "react-hook-form";
-import { z } from "zod";
+import { Eye, EyeOff } from "lucide-react";
 
 interface ILoginForm {
   email: string;
@@ -29,6 +31,9 @@ export const FormLogin = () => {
   } = useForm<ILoginForm>({
     resolver: zodResolver(schema),
   });
+  const [passworType, setPassworType] = useState<"password" | "text">(
+    "password"
+  );
 
   const onSubmit = (data: ILoginForm) => {
     console.log(data);
@@ -59,11 +64,17 @@ export const FormLogin = () => {
       <div className="flex flex-col gap-1">
         <Input
           label="Senha"
-          type="password"
+          type={passworType}
           {...register("password")}
           className={cn({
             "border border-red-700": errors && errors.password,
           })}
+          Icon={() => (passworType === "password" ? <Eye /> : <EyeOff />)}
+          iconAction={() => {
+            setPassworType((prev) =>
+              prev === "password" ? "text" : "password"
+            );
+          }}
         />
         {errors && errors.password && (
           <span className="text-xs text-red-700 font-bold">
