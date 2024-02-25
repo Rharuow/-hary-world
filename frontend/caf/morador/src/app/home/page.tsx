@@ -1,4 +1,5 @@
 import React from "react";
+import { Car, CheckCircle2, Footprints, XCircle } from "lucide-react";
 
 import { Header } from "@/components/domain/header";
 import {
@@ -10,7 +11,14 @@ import {
 import { Card } from "@/components/ui/card";
 import { Image } from "@/components/ui/image";
 import { Empty } from "@/components/empty";
-import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 export default function Home() {
   let visitants = [
@@ -52,7 +60,50 @@ export default function Home() {
               <AccordionTrigger>Visitantes</AccordionTrigger>
               <AccordionContent>
                 {visitants.length > 0 ? (
-                  <></>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead className="text-primary text-center">
+                          Nome
+                        </TableHead>
+                        <TableHead className="text-primary text-center">
+                          Status
+                        </TableHead>
+                        <TableHead className="text-primary text-center">
+                          Tipo
+                        </TableHead>
+                        <TableHead className="text-primary text-center">
+                          Código
+                        </TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {visitants.map((visitant, index) => (
+                        <TableRow key={index}>
+                          <TableCell className="font-medium truncate">
+                            {visitant.name}
+                          </TableCell>
+                          <TableCell className="flex justify-center">
+                            {visitant.available ? (
+                              <CheckCircle2 className="rounded-full flex justify-center bg-green-500" />
+                            ) : (
+                              <XCircle className="rounded-full flex justify-center bg-destructive" />
+                            )}
+                          </TableCell>
+                          <TableCell>
+                            {visitant.type === "pedestrian" ? (
+                              <Footprints />
+                            ) : (
+                              <Car />
+                            )}
+                          </TableCell>
+                          <TableCell className="text-right">
+                            {visitant.code}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
                 ) : (
                   <Empty text="Nenhum visitante cadastrado!" />
                 )}
