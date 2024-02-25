@@ -10,6 +10,7 @@ import {
 import { Card } from "@/components/ui/card";
 import { Image } from "@/components/ui/image";
 import { Empty } from "@/components/empty";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Home() {
   let visitants = [
@@ -45,11 +46,16 @@ export default function Home() {
 
       <div className="flex flex-col px-3 z-10">
         <Card className="p-3 bg-secondary">
+          {/* <Skeleton className="h-10" /> */}
           <Accordion type="single" collapsible>
             <AccordionItem value="visitants">
               <AccordionTrigger>Visitantes</AccordionTrigger>
               <AccordionContent>
-                <Empty text="Nenhum visitante cadastrado!" />
+                {visitants.length > 0 ? (
+                  <></>
+                ) : (
+                  <Empty text="Nenhum visitante cadastrado!" />
+                )}
               </AccordionContent>
             </AccordionItem>
           </Accordion>
