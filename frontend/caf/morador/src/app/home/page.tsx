@@ -1,5 +1,11 @@
 import React from "react";
-import { Car, CheckCircle2, Footprints, XCircle } from "lucide-react";
+import {
+  Car,
+  CheckCircle2,
+  Footprints,
+  MoreVertical,
+  XCircle,
+} from "lucide-react";
 
 import { Header } from "@/components/domain/header";
 import {
@@ -75,6 +81,9 @@ export default function Home() {
                         <TableHead className="text-primary text-center">
                           Código
                         </TableHead>
+                        <TableHead className="text-primary text-center">
+                          Ação
+                        </TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -97,8 +106,9 @@ export default function Home() {
                               <Car />
                             )}
                           </TableCell>
-                          <TableCell className="text-right">
-                            {visitant.code}
+                          <TableCell>{visitant.code}</TableCell>
+                          <TableCell className="text-center">
+                            <MoreVertical />
                           </TableCell>
                         </TableRow>
                       ))}
