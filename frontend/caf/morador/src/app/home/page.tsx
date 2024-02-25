@@ -33,7 +33,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
 
 export default function Home() {
   let visitants = [
@@ -90,50 +89,49 @@ export default function Home() {
                         <TableHead className="text-primary text-center">
                           Código
                         </TableHead>
-                        <TableHead className="text-primary text-center">
-                          Ação
-                        </TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {visitants.map((visitant, index) => (
                         <TableRow key={index}>
-                          <TableCell className="font-medium truncate">
-                            {visitant.name}
-                          </TableCell>
-                          <TableCell className="flex justify-center">
-                            {visitant.available ? (
-                              <CheckCircle2 className="rounded-full flex justify-center bg-green-500" />
-                            ) : (
-                              <XCircle className="rounded-full flex justify-center bg-destructive" />
-                            )}
-                          </TableCell>
-                          <TableCell>
-                            {visitant.type === "pedestrian" ? (
-                              <Footprints />
-                            ) : (
-                              <Car />
-                            )}
-                          </TableCell>
-                          <TableCell>{visitant.code}</TableCell>
-                          <TableCell className="text-center">
-                            <Popover>
+                          <Popover>
+                            <TableCell className="font-medium truncate">
+                              <PopoverTrigger>{visitant.name}</PopoverTrigger>
+                            </TableCell>
+                            <TableCell className="flex justify-center">
                               <PopoverTrigger>
-                                <MoreVertical />
+                                {visitant.available ? (
+                                  <CheckCircle2 className="rounded-full flex justify-center bg-green-500" />
+                                ) : (
+                                  <XCircle className="rounded-full flex justify-center bg-destructive" />
+                                )}
                               </PopoverTrigger>
-                              <PopoverContent className="w-auto flex flex-col gap-3">
-                                <div className="flex items-center gap-2 bg-primary p-2 rounded-lg text-white">
-                                  <Trash2 size={18} />
-                                </div>
-                                <div className="flex items-center gap-2 bg-primary p-2 rounded-lg text-white">
-                                  <Pen size={18} />
-                                </div>
-                                <div className="flex items-center gap-2 bg-primary p-2 rounded-lg text-white">
-                                  <ShieldBan size={18} />
-                                </div>
-                              </PopoverContent>
-                            </Popover>
-                          </TableCell>
+                            </TableCell>
+                            <TableCell>
+                              <PopoverTrigger>
+                                {visitant.type === "pedestrian" ? (
+                                  <Footprints />
+                                ) : (
+                                  <Car />
+                                )}
+                              </PopoverTrigger>
+                            </TableCell>
+                            <TableCell>
+                              <PopoverTrigger>{visitant.code}</PopoverTrigger>
+                            </TableCell>
+
+                            <PopoverContent className="w-auto flex flex-col gap-3">
+                              <div className="flex items-center gap-2 bg-primary p-2 rounded-lg text-white">
+                                <Trash2 size={18} />
+                              </div>
+                              <div className="flex items-center gap-2 bg-primary p-2 rounded-lg text-white">
+                                <Pen size={18} />
+                              </div>
+                              <div className="flex items-center gap-2 bg-primary p-2 rounded-lg text-white">
+                                <ShieldBan size={18} />
+                              </div>
+                            </PopoverContent>
+                          </Popover>
                         </TableRow>
                       ))}
                     </TableBody>
