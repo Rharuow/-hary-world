@@ -11,34 +11,34 @@ import { Card } from "@/components/ui/card";
 import { Image } from "@/components/ui/image";
 import { Empty } from "@/components/empty";
 
-const visitants = [
-  {
-    name: "Visitante 1",
-    type: "pedestrian",
-    code: "123456",
-    available: true,
-  },
-  {
-    name: "Visitante 2",
-    type: "driver",
-    code: "123456",
-    available: true,
-  },
-  {
-    name: "Visitante 3",
-    type: "driver",
-    code: "123456",
-    available: false,
-  },
-  {
-    name: "Visitante 4",
-    type: "pedestrian",
-    code: "123456",
-    available: false,
-  },
-];
-
 export default function Home() {
+  let visitants = [
+    {
+      name: "Visitante 1",
+      type: "pedestrian",
+      code: "123456",
+      available: true,
+    },
+    {
+      name: "Visitante 2",
+      type: "driver",
+      code: "123456",
+      available: true,
+    },
+    {
+      name: "Visitante 3",
+      type: "driver",
+      code: "123456",
+      available: false,
+    },
+    {
+      name: "Visitante 4",
+      type: "pedestrian",
+      code: "123456",
+      available: false,
+    },
+  ];
+
   return (
     <main className="min-h-svh relative bg-primary from-secondary to-primary flex flex-col gap-8">
       <Header />
