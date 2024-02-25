@@ -4,6 +4,9 @@ import {
   CheckCircle2,
   Footprints,
   MoreVertical,
+  Pen,
+  ShieldBan,
+  Trash2,
   XCircle,
 } from "lucide-react";
 
@@ -25,6 +28,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   let visitants = [
@@ -108,7 +117,22 @@ export default function Home() {
                           </TableCell>
                           <TableCell>{visitant.code}</TableCell>
                           <TableCell className="text-center">
-                            <MoreVertical />
+                            <Popover>
+                              <PopoverTrigger>
+                                <MoreVertical />
+                              </PopoverTrigger>
+                              <PopoverContent className="w-auto flex flex-col gap-3">
+                                <div className="flex items-center gap-2 bg-primary p-2 rounded-lg text-white">
+                                  <Trash2 size={18} />
+                                </div>
+                                <div className="flex items-center gap-2 bg-primary p-2 rounded-lg text-white">
+                                  <Pen size={18} />
+                                </div>
+                                <div className="flex items-center gap-2 bg-primary p-2 rounded-lg text-white">
+                                  <ShieldBan size={18} />
+                                </div>
+                              </PopoverContent>
+                            </Popover>
                           </TableCell>
                         </TableRow>
                       ))}
