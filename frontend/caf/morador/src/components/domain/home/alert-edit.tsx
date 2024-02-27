@@ -12,6 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
+import { Switch } from "@/components/ui/switch";
 
 export const AlertEdit = ({
   visitant,
@@ -44,6 +45,18 @@ export const AlertEdit = ({
       </DialogHeader>
       <div className="flex flex-col gap-4">
         <Input label="Nome" {...register("name")} />
+        <div className="grid grid-cols-2 gap-3">
+          <div className="flex flex-col gap-1">
+            <label htmlFor="available" className="text-white font-bold text-sm">
+              Ativo
+            </label>
+            <Switch
+              id="available"
+              checked={Boolean(visitant.available)}
+              {...register("available")}
+            />
+          </div>
+        </div>
         <Input label="Bloqueado" />
         <Input label="Tipo" />
       </div>
