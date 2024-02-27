@@ -5,6 +5,7 @@ import { VisitantsList } from "@/components/domain/home/visitants-list";
 export interface IVisitant {
   name: string;
   type: string;
+  cpf: string;
   code: string;
   available: boolean;
 }

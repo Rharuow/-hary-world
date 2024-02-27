@@ -34,6 +34,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Empty } from "@/components/empty";
+import { AlertEdit } from "./alert-edit";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 
 const visitantsData: Array<IVisitant> = [
   {
@@ -41,24 +43,28 @@ const visitantsData: Array<IVisitant> = [
     type: "pedestrian",
     code: "123456",
     available: true,
+    cpf: "972.838.690-77",
   },
   {
     name: "Visitante 2",
     type: "driver",
     code: "123456",
     available: true,
+    cpf: "977.320.570-31",
   },
   {
     name: "Visitante 3",
     type: "driver",
     code: "123456",
     available: false,
+    cpf: "293.324.370-92",
   },
   {
     name: "Visitante 4",
     type: "pedestrian",
     code: "123456",
     available: false,
+    cpf: "325.761.990-11",
   },
 ];
 
@@ -68,6 +74,16 @@ export const VisitantsList = () => {
   const handleDelete = (visitant: IVisitant) => {
     setVisitants((prev) => prev.filter((vis) => vis.name !== visitant.name));
   };
+
+  const handleEdit = (visitant: IVisitant) => {
+    setVisitants((prev) =>
+      prev.map((vis) => {
+        if (vis.name !== visitant.name) return vis;
+        return visitant;
+      })
+    );
+  };
+
   return (
     <Card className="p-3 bg-secondary">
       {/* <Skeleton className="h-10" /> */}
@@ -135,9 +151,17 @@ export const VisitantsList = () => {
                             />
                           </AlertDialog>
 
-                          <div className="flex items-center gap-2 bg-primary p-2 rounded-lg text-white">
-                            <Pen size={18} />
-                          </div>
+                          <Dialog>
+                            <DialogTrigger>
+                              <div className="flex items-center gap-2 bg-primary p-2 rounded-lg text-white">
+                                <Pen size={18} />
+                              </div>
+                            </DialogTrigger>
+                            <AlertEdit
+                              visitant={visitant}
+                              handleEdit={handleEdit}
+                            />
+                          </Dialog>
                           <div className="flex items-center gap-2 bg-primary p-2 rounded-lg text-white">
                             <ShieldBan size={18} />
                           </div>
