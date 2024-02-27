@@ -13,6 +13,13 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { Switch } from "@/components/ui/switch";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export const AlertEdit = ({
   visitant,
@@ -33,20 +40,20 @@ export const AlertEdit = ({
   });
 
   return (
-    <DialogContent className="sm:max-w-[425px] bg-secondary">
+    <DialogContent className="sm:max-w-[425px] bg-primary">
       <DialogHeader>
-        <DialogTitle className="text-secondary-foreground">
+        <DialogTitle className="text-primary-foreground">
           Editando {visitant.name}
         </DialogTitle>
-        <DialogDescription className="text-secondary-foreground">
+        <DialogDescription className="text-primary-foreground">
           Edite os dados de {visitant.name} e clique em{" "}
-          <span className="text-secondary font-bold">Salvar</span>.
+          <span className="text-primary font-bold">Salvar</span>.
         </DialogDescription>
       </DialogHeader>
       <div className="flex flex-col gap-4">
         <Input label="Nome" {...register("name")} />
-        <div className="grid grid-cols-2 gap-3">
-          <div className="flex flex-col gap-1">
+        <div className="flex items-center gap-3">
+          <div className="flex flex-col items-center gap-1">
             <label htmlFor="available" className="text-white font-bold text-sm">
               Ativo
             </label>
@@ -56,12 +63,22 @@ export const AlertEdit = ({
               {...register("available")}
             />
           </div>
+          <Select>
+            <SelectTrigger>
+              <SelectValue placeholder="Tipo" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="light">Light</SelectItem>
+              <SelectItem value="dark">Dark</SelectItem>
+              <SelectItem value="system">System</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
-        <Input label="Bloqueado" />
-        <Input label="Tipo" />
       </div>
       <DialogFooter>
-        <Button onClick={() => handleEdit(visitant)}>Salvar</Button>
+        <Button variant={"secondary"} onClick={() => handleEdit(visitant)}>
+          Salvar
+        </Button>
       </DialogFooter>
     </DialogContent>
   );
