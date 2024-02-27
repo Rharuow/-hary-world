@@ -51,7 +51,7 @@ export const MenuContent = () => {
               Visitante
             </AccordionTrigger>
             <AccordionContent className="text-white ps-4 flex flex-col gap-2">
-              <Link href={"#"}>Adiconar</Link>
+              <Link href={"#"}>Adicionar</Link>
               <Link href={"#"}>Listar</Link>
               <Link href={"#"}>Histórico</Link>
             </AccordionContent>
@@ -59,7 +59,7 @@ export const MenuContent = () => {
           <AccordionItem value="booking">
             <AccordionTrigger className="text-white">Reservas</AccordionTrigger>
             <AccordionContent className="text-white ps-4 flex flex-col gap-2">
-              <Link href={"#"}>Adiconar</Link>
+              <Link href={"#"}>Adicionar</Link>
               <Link href={"#"}>Listar</Link>
               <Link href={"#"}>Histórico</Link>
             </AccordionContent>
@@ -67,7 +67,7 @@ export const MenuContent = () => {
           <AccordionItem value="resident">
             <AccordionTrigger className="text-white">Morador</AccordionTrigger>
             <AccordionContent className="text-white ps-4 flex flex-col gap-2">
-              <Link href={"#"}>Adiconar</Link>
+              <Link href={"#"}>Adicionar</Link>
               <Link href={"#"}>Listar</Link>
             </AccordionContent>
           </AccordionItem>
