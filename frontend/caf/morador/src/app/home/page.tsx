@@ -1,148 +1,22 @@
-import React from "react";
-import {
-  Car,
-  CheckCircle2,
-  Footprints,
-  MoreVertical,
-  Pen,
-  ShieldBan,
-  Trash2,
-  XCircle,
-} from "lucide-react";
-
 import { Header } from "@/components/domain/header";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Card } from "@/components/ui/card";
 import { Image } from "@/components/ui/image";
-import { Empty } from "@/components/empty";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { VisitantsList } from "@/components/domain/home/visitants-list";
+
+export interface IVisitant {
+  name: string;
+  type: "pedestrian" | "driver";
+  cpf: string;
+  code: string;
+  available: boolean;
+}
 
 export default function Home() {
-  let visitants = [
-    {
-      name: "Visitante 1",
-      type: "pedestrian",
-      code: "123456",
-      available: true,
-    },
-    {
-      name: "Visitante 2",
-      type: "driver",
-      code: "123456",
-      available: true,
-    },
-    {
-      name: "Visitante 3",
-      type: "driver",
-      code: "123456",
-      available: false,
-    },
-    {
-      name: "Visitante 4",
-      type: "pedestrian",
-      code: "123456",
-      available: false,
-    },
-  ];
-
   return (
     <main className="min-h-svh relative bg-primary from-secondary to-primary flex flex-col gap-8">
       <Header />
 
       <div className="flex flex-col px-3 z-10">
-        <Card className="p-3 bg-secondary">
-          {/* <Skeleton className="h-10" /> */}
-          <Accordion type="single" collapsible>
-            <AccordionItem value="visitants">
-              <AccordionTrigger>Visitantes</AccordionTrigger>
-              <AccordionContent>
-                {visitants.length > 0 ? (
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead className="text-primary text-center">
-                          Nome
-                        </TableHead>
-                        <TableHead className="text-primary text-center">
-                          Status
-                        </TableHead>
-                        <TableHead className="text-primary text-center">
-                          Tipo
-                        </TableHead>
-                        <TableHead className="text-primary text-center">
-                          Código
-                        </TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {visitants.map((visitant, index) => (
-                        <TableRow key={index}>
-                          <Popover>
-                            <TableCell className="font-medium truncate">
-                              <PopoverTrigger>{visitant.name}</PopoverTrigger>
-                            </TableCell>
-                            <TableCell className="flex justify-center">
-                              <PopoverTrigger>
-                                {visitant.available ? (
-                                  <CheckCircle2 className="rounded-full flex justify-center bg-green-500" />
-                                ) : (
-                                  <XCircle className="rounded-full flex justify-center bg-destructive" />
-                                )}
-                              </PopoverTrigger>
-                            </TableCell>
-                            <TableCell>
-                              <PopoverTrigger>
-                                {visitant.type === "pedestrian" ? (
-                                  <Footprints />
-                                ) : (
-                                  <Car />
-                                )}
-                              </PopoverTrigger>
-                            </TableCell>
-                            <TableCell>
-                              <PopoverTrigger>{visitant.code}</PopoverTrigger>
-                            </TableCell>
-
-                            <PopoverContent className="w-auto flex flex-col gap-3">
-                              <div className="flex items-center gap-2 bg-primary p-2 rounded-lg text-white">
-                                <Trash2 size={18} />
-                              </div>
-                              <div className="flex items-center gap-2 bg-primary p-2 rounded-lg text-white">
-                                <Pen size={18} />
-                              </div>
-                              <div className="flex items-center gap-2 bg-primary p-2 rounded-lg text-white">
-                                <ShieldBan size={18} />
-                              </div>
-                            </PopoverContent>
-                          </Popover>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                ) : (
-                  <Empty text="Nenhum visitante cadastrado!" />
-                )}
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </Card>
+        <VisitantsList />
       </div>
 
       <Image
