@@ -11,15 +11,18 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { Switch } from "@/components/ui/switch";
 import {
   Select,
   SelectContent,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Car, Footprints } from "lucide-react";
+import { SelectGroup } from "@radix-ui/react-select";
 
 export const AlertEdit = ({
   visitant,
@@ -28,7 +31,7 @@ export const AlertEdit = ({
   visitant: IVisitant;
   handleEdit: (visitant: IVisitant) => void;
 }) => {
-  const { register } = useForm<
+  const { register, control, setValue } = useForm<
     Pick<IVisitant, "available" | "name" | "type" | "cpf">
   >({
     defaultValues: {
@@ -39,27 +42,30 @@ export const AlertEdit = ({
     },
   });
 
+  const availableWatch = useWatch({ control, name: "available" });
+
   return (
-    <DialogContent className="sm:max-w-[425px] bg-primary">
+    <DialogContent className="sm:max-w-[425px] bg-secondary">
       <DialogHeader>
-        <DialogTitle className="text-primary-foreground">
+        <DialogTitle className="text-secondary-foreground">
           Editando {visitant.name}
         </DialogTitle>
-        <DialogDescription className="text-primary-foreground">
+        <DialogDescription className="text-secondary-foreground">
           Edite os dados de {visitant.name} e clique em{" "}
-          <span className="text-primary font-bold">Salvar</span>.
+          <span className="text-secondary font-bold">Salvar</span>.
         </DialogDescription>
       </DialogHeader>
       <div className="flex flex-col gap-4">
         <Input label="Nome" {...register("name")} />
-        <div className="flex items-center gap-3">
-          <div className="flex flex-col items-center gap-1">
+        <div className="grid grid-cols-2 gap-3">
+          <div className="flex justify-center items-center gap-3">
             <label htmlFor="available" className="text-white font-bold text-sm">
               Ativo
             </label>
             <Switch
               id="available"
-              checked={Boolean(visitant.available)}
+              checked={availableWatch}
+              onClick={() => setValue("available", !availableWatch)}
               {...register("available")}
             />
           </div>
@@ -67,16 +73,26 @@ export const AlertEdit = ({
             <SelectTrigger>
               <SelectValue placeholder="Tipo" />
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="light">Light</SelectItem>
-              <SelectItem value="dark">Dark</SelectItem>
-              <SelectItem value="system">System</SelectItem>
+            <SelectContent className="flex gap-1" {...register("type")}>
+              <SelectItem value="pedestrian" className="flex justify-center">
+                <span className="flex justify-center items-center gap-2">
+                  <Footprints size={16} /> Pedestre
+                </span>
+              </SelectItem>
+              <SelectItem value="driver" className="flex justify-center">
+                <span className="flex justify-center items-center gap-2">
+                  <Car size={16} /> Pedestre
+                </span>
+              </SelectItem>
             </SelectContent>
           </Select>
         </div>
       </div>
       <DialogFooter>
-        <Button variant={"secondary"} onClick={() => handleEdit(visitant)}>
+        <Button
+          className="text-primary-foreground font-bold focus:bg-primary-dark focus:text-white hover:bg-primary-dark hover:text-white"
+          onClick={() => handleEdit(visitant)}
+        >
           Salvar
         </Button>
       </DialogFooter>

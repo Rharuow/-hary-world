@@ -4,7 +4,7 @@ import { VisitantsList } from "@/components/domain/home/visitants-list";
 
 export interface IVisitant {
   name: string;
-  type: string;
+  type: "pedestrian" | "driver";
   cpf: string;
   code: string;
   available: boolean;
