@@ -2,6 +2,7 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
+import { useFormContext, useWatch } from "react-hook-form";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {}
@@ -30,6 +31,11 @@ const Input = React.forwardRef<
     ref
   ) => {
     const [focused, setFocused] = React.useState(false);
+
+    const { control } = useFormContext();
+
+    const valueWatch = useWatch({ control, name: String(props.name) });
+
     return (
       <div className="relative">
         <input
@@ -55,7 +61,7 @@ const Input = React.forwardRef<
             className={cn(
               "text-white absolute top-1/2 -translate-y-1/2 left-3",
               {
-                "animate-label-focus": focused,
+                "animate-label-focus": focused || valueWatch,
                 "animate-label-blur": !focused,
               }
             )}

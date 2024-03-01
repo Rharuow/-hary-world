@@ -6,6 +6,9 @@ export interface IVisitant {
   name: string;
   type: "pedestrian" | "driver";
   cpf: string;
+  email?: string;
+  phone: string;
+  cnh?: string;
   code: string;
   available: boolean;
 }
