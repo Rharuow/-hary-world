@@ -40,6 +40,7 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 const visitantsData: Array<IVisitant> = [
   {
     name: "Visitante 1",
+    phone: "(00) 00000-0000",
     type: "pedestrian",
     code: "123456",
     available: true,
@@ -47,6 +48,8 @@ const visitantsData: Array<IVisitant> = [
   },
   {
     name: "Visitante 2",
+    phone: "(00) 00000-0000",
+    email: "visitant@visitant.com",
     type: "driver",
     code: "123456",
     available: true,
@@ -54,6 +57,7 @@ const visitantsData: Array<IVisitant> = [
   },
   {
     name: "Visitante 3",
+    phone: "(00) 00000-0000",
     type: "driver",
     code: "123456",
     available: false,
@@ -61,6 +65,7 @@ const visitantsData: Array<IVisitant> = [
   },
   {
     name: "Visitante 4",
+    phone: "(00) 00000-0000",
     type: "pedestrian",
     code: "123456",
     available: false,
@@ -70,6 +75,7 @@ const visitantsData: Array<IVisitant> = [
 
 export const VisitantsList = () => {
   const [visitants, setVisitants] = useState(visitantsData);
+  const [editVisitantOpen, setEditVisitantOpen] = useState(false);
 
   const handleDelete = (visitant: IVisitant) => {
     setVisitants((prev) => prev.filter((vis) => vis.name !== visitant.name));
@@ -82,6 +88,7 @@ export const VisitantsList = () => {
         return visitant;
       })
     );
+    setEditVisitantOpen(false);
   };
 
   return (
@@ -151,15 +158,21 @@ export const VisitantsList = () => {
                             />
                           </AlertDialog>
 
-                          <Dialog>
-                            <DialogTrigger>
-                              <div className="flex items-center gap-2 bg-primary p-2 rounded-lg text-white">
+                          <Dialog open={editVisitantOpen}>
+                            <DialogTrigger asChild>
+                              <div
+                                className="flex items-center gap-2 bg-primary p-2 rounded-lg text-white"
+                                onClick={() => setEditVisitantOpen(true)}
+                              >
                                 <Pen size={18} />
                               </div>
                             </DialogTrigger>
                             <AlertEdit
                               visitant={visitant}
                               handleEdit={handleEdit}
+                              handleCloseModal={() =>
+                                setEditVisitantOpen(false)
+                              }
                             />
                           </Dialog>
                           <div className="flex items-center gap-2 bg-primary p-2 rounded-lg text-white">

@@ -129,13 +129,9 @@ export const FormSignup = () => {
             label="CPF"
             inputMode="numeric"
             {...register("cpf", {
-              onChange: (event) => {
-                setValue("cpf", cpfMask(event.target.value));
-              },
-              onBlur: (event) => {
-                console.log(cpfIsValid(event.target.value));
-                setCpfIsInvalid(!cpfIsValid(event.target.value));
-              },
+              onChange: (event) => setValue("cpf", cpfMask(event.target.value)),
+              onBlur: (event) =>
+                setCpfIsInvalid(!cpfIsValid(event.target.value)),
             })}
             className={cn({
               "border border-red-700": (errors && errors.cpf) || cpfIsInvalid,
