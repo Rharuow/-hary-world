@@ -2,12 +2,13 @@
 import React, { useState } from "react";
 import {
   Car,
-  CheckCircle2,
   Footprints,
   Pen,
   ShieldBan,
+  ShieldCheck,
+  ShieldQuestion,
+  ShieldX,
   Trash2,
-  XCircle,
 } from "lucide-react";
 
 import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
@@ -36,6 +37,11 @@ import {
 import { Empty } from "@/components/empty";
 import { AlertEdit } from "./alert-edit";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 
 const visitantsData: Array<IVisitant> = [
   {
@@ -43,7 +49,7 @@ const visitantsData: Array<IVisitant> = [
     phone: "(00) 00000-0000",
     type: "pedestrian",
     code: "123456",
-    available: true,
+    available: { status: "allowed" },
     cpf: "972.838.690-77",
   },
   {
@@ -52,7 +58,7 @@ const visitantsData: Array<IVisitant> = [
     email: "visitant@visitant.com",
     type: "driver",
     code: "123456",
-    available: true,
+    available: { status: "allowed" },
     cpf: "977.320.570-31",
   },
   {
@@ -60,7 +66,10 @@ const visitantsData: Array<IVisitant> = [
     phone: "(00) 00000-0000",
     type: "driver",
     code: "123456",
-    available: false,
+    available: {
+      status: "blocked",
+      justification: "Verificação da habilitação.",
+    },
     cpf: "293.324.370-92",
   },
   {
@@ -68,7 +77,10 @@ const visitantsData: Array<IVisitant> = [
     phone: "(00) 00000-0000",
     type: "pedestrian",
     code: "123456",
-    available: false,
+    available: {
+      status: "processing",
+      justification: "Descumprimento das regras internas",
+    },
     cpf: "325.761.990-11",
   },
 ];
@@ -124,13 +136,27 @@ export const VisitantsList = () => {
                           <PopoverTrigger>{visitant.name}</PopoverTrigger>
                         </TableCell>
                         <TableCell className="flex justify-center">
-                          <PopoverTrigger>
-                            {visitant.available ? (
-                              <CheckCircle2 className="rounded-full flex justify-center bg-green-500" />
-                            ) : (
-                              <XCircle className="rounded-full flex justify-center bg-destructive" />
-                            )}
-                          </PopoverTrigger>
+                          {visitant.available.status === "allowed" ? (
+                            <ShieldCheck className="rounded-full flex justify-center text-green-900" />
+                          ) : visitant.available.status === "blocked" ? (
+                            <HoverCard>
+                              <HoverCardTrigger>
+                                <ShieldX className="rounded-full flex justify-center text-destructive" />
+                              </HoverCardTrigger>
+                              <HoverCardContent>
+                                {visitant.available.justification}
+                              </HoverCardContent>
+                            </HoverCard>
+                          ) : (
+                            <HoverCard>
+                              <HoverCardTrigger>
+                                <ShieldQuestion className="rounded-full flex justify-center text-yellow-900" />
+                              </HoverCardTrigger>
+                              <HoverCardContent>
+                                {visitant.available.justification}
+                              </HoverCardContent>
+                            </HoverCard>
+                          )}
                         </TableCell>
                         <TableCell>
                           <PopoverTrigger>
@@ -175,9 +201,13 @@ export const VisitantsList = () => {
                               }
                             />
                           </Dialog>
-                          <div className="flex items-center gap-2 bg-primary p-2 rounded-lg text-white">
-                            <ShieldBan size={18} />
-                          </div>
+                          <Dialog open={editVisitantOpen}>
+                            <DialogTrigger asChild>
+                              <div className="flex items-center gap-2 bg-primary p-2 rounded-lg text-white">
+                                <ShieldBan size={18} />
+                              </div>
+                            </DialogTrigger>
+                          </Dialog>
                         </PopoverContent>
                       </Popover>
                     </TableRow>

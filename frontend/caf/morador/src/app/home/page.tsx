@@ -10,7 +10,10 @@ export interface IVisitant {
   phone: string;
   cnh?: string;
   code: string;
-  available: boolean;
+  available: {
+    status: "allowed" | "blocked" | "processing";
+    justification?: string;
+  };
 }
 
 export default function Home() {
