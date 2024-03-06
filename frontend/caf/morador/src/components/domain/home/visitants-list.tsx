@@ -42,6 +42,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { AlertBlock } from "./alert-block";
 
 const visitantsData: Array<IVisitant> = [
   {
@@ -68,7 +69,7 @@ const visitantsData: Array<IVisitant> = [
     code: "123456",
     available: {
       status: "blocked",
-      justification: "Verificação da habilitação.",
+      justification: ["Falta de verificação da habilitação"],
     },
     cpf: "293.324.370-92",
   },
@@ -79,7 +80,7 @@ const visitantsData: Array<IVisitant> = [
     code: "123456",
     available: {
       status: "processing",
-      justification: "Descumprimento das regras internas",
+      justification: ["Descumprimento das regras internas"],
     },
     cpf: "325.761.990-11",
   },
@@ -88,6 +89,7 @@ const visitantsData: Array<IVisitant> = [
 export const VisitantsList = () => {
   const [visitants, setVisitants] = useState(visitantsData);
   const [editVisitantOpen, setEditVisitantOpen] = useState(false);
+  const [blockVisitantOpen, setBlockVisitantOpen] = useState(false);
 
   const handleDelete = (visitant: IVisitant) => {
     setVisitants((prev) => prev.filter((vis) => vis.name !== visitant.name));
@@ -101,6 +103,16 @@ export const VisitantsList = () => {
       })
     );
     setEditVisitantOpen(false);
+  };
+
+  const handleBlock = (visitant: IVisitant) => {
+    setVisitants((prev) =>
+      prev.map((vis) => {
+        if (vis.name !== visitant.name) return vis;
+        return visitant;
+      })
+    );
+    setBlockVisitantOpen(false);
   };
 
   return (
@@ -201,12 +213,28 @@ export const VisitantsList = () => {
                               }
                             />
                           </Dialog>
-                          <Dialog open={editVisitantOpen}>
+                          <Dialog open={blockVisitantOpen}>
                             <DialogTrigger asChild>
-                              <div className="flex items-center gap-2 bg-primary p-2 rounded-lg text-white">
-                                <ShieldBan size={18} />
+                              <div
+                                className="flex items-center gap-2 bg-primary p-2 rounded-lg text-white"
+                                onClick={() => {
+                                  setBlockVisitantOpen(true);
+                                }}
+                              >
+                                {visitant.available.status === "allowed" ? (
+                                  <ShieldBan size={18} />
+                                ) : (
+                                  <ShieldCheck size={18} />
+                                )}
                               </div>
                             </DialogTrigger>
+                            <AlertBlock
+                              handleBlock={handleBlock}
+                              handleCloseModal={() =>
+                                setBlockVisitantOpen(false)
+                              }
+                              visitant={visitant}
+                            />
                           </Dialog>
                         </PopoverContent>
                       </Popover>

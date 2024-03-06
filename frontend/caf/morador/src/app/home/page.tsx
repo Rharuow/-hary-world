@@ -12,7 +12,7 @@ export interface IVisitant {
   code: string;
   available: {
     status: "allowed" | "blocked" | "processing";
-    justification?: string;
+    justifications?: Array<string>;
   };
 }
 
