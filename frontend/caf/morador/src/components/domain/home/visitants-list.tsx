@@ -2,12 +2,13 @@
 import React, { useState } from "react";
 import {
   Car,
-  CheckCircle2,
   Footprints,
   Pen,
   ShieldBan,
+  ShieldCheck,
+  ShieldQuestion,
+  ShieldX,
   Trash2,
-  XCircle,
 } from "lucide-react";
 
 import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
@@ -25,7 +26,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { AlertDelete } from "./alert-delete";
-import { IVisitant } from "@/app/home/page";
 import { Card } from "@/components/ui/card";
 import {
   Accordion,
@@ -36,46 +36,18 @@ import {
 import { Empty } from "@/components/empty";
 import { AlertEdit } from "./alert-edit";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-
-const visitantsData: Array<IVisitant> = [
-  {
-    name: "Visitante 1",
-    phone: "(00) 00000-0000",
-    type: "pedestrian",
-    code: "123456",
-    available: true,
-    cpf: "972.838.690-77",
-  },
-  {
-    name: "Visitante 2",
-    phone: "(00) 00000-0000",
-    email: "visitant@visitant.com",
-    type: "driver",
-    code: "123456",
-    available: true,
-    cpf: "977.320.570-31",
-  },
-  {
-    name: "Visitante 3",
-    phone: "(00) 00000-0000",
-    type: "driver",
-    code: "123456",
-    available: false,
-    cpf: "293.324.370-92",
-  },
-  {
-    name: "Visitante 4",
-    phone: "(00) 00000-0000",
-    type: "pedestrian",
-    code: "123456",
-    available: false,
-    cpf: "325.761.990-11",
-  },
-];
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+import { AlertBlock } from "./alert-block";
+import { IVisitant, visitantsData } from "@/mock/visitants";
 
 export const VisitantsList = () => {
   const [visitants, setVisitants] = useState(visitantsData);
   const [editVisitantOpen, setEditVisitantOpen] = useState(false);
+  const [blockVisitantOpen, setBlockVisitantOpen] = useState(false);
 
   const handleDelete = (visitant: IVisitant) => {
     setVisitants((prev) => prev.filter((vis) => vis.name !== visitant.name));
@@ -89,6 +61,16 @@ export const VisitantsList = () => {
       })
     );
     setEditVisitantOpen(false);
+  };
+
+  const handleBlock = (visitant: IVisitant) => {
+    setVisitants((prev) =>
+      prev.map((vis) => {
+        if (vis.name !== visitant.name) return vis;
+        return visitant;
+      })
+    );
+    setBlockVisitantOpen(false);
   };
 
   return (
@@ -124,13 +106,27 @@ export const VisitantsList = () => {
                           <PopoverTrigger>{visitant.name}</PopoverTrigger>
                         </TableCell>
                         <TableCell className="flex justify-center">
-                          <PopoverTrigger>
-                            {visitant.available ? (
-                              <CheckCircle2 className="rounded-full flex justify-center bg-green-500" />
-                            ) : (
-                              <XCircle className="rounded-full flex justify-center bg-destructive" />
-                            )}
-                          </PopoverTrigger>
+                          {visitant.available.status === "allowed" ? (
+                            <ShieldCheck className="rounded-full flex justify-center text-green-900" />
+                          ) : visitant.available.status === "blocked" ? (
+                            <HoverCard>
+                              <HoverCardTrigger>
+                                <ShieldX className="rounded-full flex justify-center text-destructive" />
+                              </HoverCardTrigger>
+                              <HoverCardContent>
+                                {visitant.available.justifications?.[0]}
+                              </HoverCardContent>
+                            </HoverCard>
+                          ) : (
+                            <HoverCard>
+                              <HoverCardTrigger>
+                                <ShieldQuestion className="rounded-full flex justify-center text-yellow-900" />
+                              </HoverCardTrigger>
+                              <HoverCardContent>
+                                {visitant.available.justifications?.[0]}
+                              </HoverCardContent>
+                            </HoverCard>
+                          )}
                         </TableCell>
                         <TableCell>
                           <PopoverTrigger>
@@ -175,9 +171,29 @@ export const VisitantsList = () => {
                               }
                             />
                           </Dialog>
-                          <div className="flex items-center gap-2 bg-primary p-2 rounded-lg text-white">
-                            <ShieldBan size={18} />
-                          </div>
+                          <Dialog open={blockVisitantOpen}>
+                            <DialogTrigger asChild>
+                              <div
+                                className="flex items-center gap-2 bg-primary p-2 rounded-lg text-white"
+                                onClick={() => {
+                                  setBlockVisitantOpen(true);
+                                }}
+                              >
+                                {visitant.available.status === "allowed" ? (
+                                  <ShieldBan size={18} />
+                                ) : (
+                                  <ShieldCheck size={18} />
+                                )}
+                              </div>
+                            </DialogTrigger>
+                            <AlertBlock
+                              handleBlock={handleBlock}
+                              handleCloseModal={() =>
+                                setBlockVisitantOpen(false)
+                              }
+                              visitant={visitant}
+                            />
+                          </Dialog>
                         </PopoverContent>
                       </Popover>
                     </TableRow>
