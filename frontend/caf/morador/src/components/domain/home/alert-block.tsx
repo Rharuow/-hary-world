@@ -1,9 +1,8 @@
 "use client";
 import React from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 
-import { IVisitant } from "@/app/home/page";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   DialogClose,
@@ -16,6 +15,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
+import { IVisitant } from "@/mock/visitants";
+import { justifications } from "@/mock/justification";
 
 const schema = z.object({
   justifications: z
@@ -39,16 +41,24 @@ export const AlertBlock = ({
   handleCloseModal: () => void;
   handleBlock: (visitant: IVisitant) => void;
 }) => {
-  const methods = useForm<IForm>({ resolver: zodResolver(schema) });
+  const methods = useForm<IForm>({
+    resolver: zodResolver(schema),
+    defaultValues: { justifications: [] },
+  });
 
   const onSubmit = (data: IForm) => {
-    handleBlock({ ...visitant });
+    handleBlock({
+      ...visitant,
+      available: { status: "processing", justifications: data.justifications },
+    });
   };
 
   const {
     handleSubmit,
     register,
+    setValue,
     formState: { errors },
+    getValues,
   } = methods;
 
   return (
@@ -91,6 +101,46 @@ export const AlertBlock = ({
                 </span>
               )}
             </div>
+            <div className="flex flex-col gap-2">
+              {justifications.map((justfication) => (
+                <div className="flex flex-col" key={justfication.id}>
+                  <div className="flex gap-3">
+                    <Checkbox
+                      id={justfication.id}
+                      className={cn({
+                        "border-red-700": errors.justifications,
+                      })}
+                      onCheckedChange={(value) => {
+                        setValue(
+                          "justifications",
+                          value
+                            ? [
+                                ...getValues("justifications"),
+                                justfication.text,
+                              ]
+                            : getValues("justifications").filter(
+                                (just) => just !== justfication.text
+                              )
+                        );
+                      }}
+                    />
+                    <div className="grid gap-1.5 leading-none">
+                      <label
+                        htmlFor={justfication.id}
+                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      >
+                        {justfication.text}
+                      </label>
+                    </div>
+                  </div>
+                  {errors.justifications && (
+                    <span className="text-xs text-red-700 font-bold">
+                      Pelo menos uma justificativa é obrigatória.
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
             <DialogFooter
               className={cn("grid grid-cols-1 gap-3", {
                 "grid-cols-2": visitant.available.status === "allowed",
@@ -109,6 +159,13 @@ export const AlertBlock = ({
               {visitant.available.status === "allowed" && (
                 <Button
                   className="text-white font-bold focus:bg-primary-dark focus:text-white hover:bg-primary-dark hover:text-white"
+                  onClick={() =>
+                    getValues("customReason") &&
+                    setValue("justifications", [
+                      ...getValues("justifications"),
+                      getValues("customReason"),
+                    ])
+                  }
                   type="submit"
                 >
                   Salvar

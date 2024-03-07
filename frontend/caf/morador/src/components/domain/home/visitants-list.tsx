@@ -26,7 +26,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { AlertDelete } from "./alert-delete";
-import { IVisitant } from "@/app/home/page";
 import { Card } from "@/components/ui/card";
 import {
   Accordion,
@@ -43,48 +42,7 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { AlertBlock } from "./alert-block";
-
-const visitantsData: Array<IVisitant> = [
-  {
-    name: "Visitante 1",
-    phone: "(00) 00000-0000",
-    type: "pedestrian",
-    code: "123456",
-    available: { status: "allowed" },
-    cpf: "972.838.690-77",
-  },
-  {
-    name: "Visitante 2",
-    phone: "(00) 00000-0000",
-    email: "visitant@visitant.com",
-    type: "driver",
-    code: "123456",
-    available: { status: "allowed" },
-    cpf: "977.320.570-31",
-  },
-  {
-    name: "Visitante 3",
-    phone: "(00) 00000-0000",
-    type: "driver",
-    code: "123456",
-    available: {
-      status: "blocked",
-      justification: ["Falta de verificação da habilitação"],
-    },
-    cpf: "293.324.370-92",
-  },
-  {
-    name: "Visitante 4",
-    phone: "(00) 00000-0000",
-    type: "pedestrian",
-    code: "123456",
-    available: {
-      status: "processing",
-      justification: ["Descumprimento das regras internas"],
-    },
-    cpf: "325.761.990-11",
-  },
-];
+import { IVisitant, visitantsData } from "@/mock/visitants";
 
 export const VisitantsList = () => {
   const [visitants, setVisitants] = useState(visitantsData);
@@ -156,7 +114,7 @@ export const VisitantsList = () => {
                                 <ShieldX className="rounded-full flex justify-center text-destructive" />
                               </HoverCardTrigger>
                               <HoverCardContent>
-                                {visitant.available.justification}
+                                {visitant.available.justifications?.[0]}
                               </HoverCardContent>
                             </HoverCard>
                           ) : (
@@ -165,7 +123,7 @@ export const VisitantsList = () => {
                                 <ShieldQuestion className="rounded-full flex justify-center text-yellow-900" />
                               </HoverCardTrigger>
                               <HoverCardContent>
-                                {visitant.available.justification}
+                                {visitant.available.justifications?.[0]}
                               </HoverCardContent>
                             </HoverCard>
                           )}

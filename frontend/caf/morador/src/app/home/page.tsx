@@ -2,20 +2,6 @@ import { Header } from "@/components/domain/header";
 import { Image } from "@/components/ui/image";
 import { VisitantsList } from "@/components/domain/home/visitants-list";
 
-export interface IVisitant {
-  name: string;
-  type: "pedestrian" | "driver";
-  cpf: string;
-  email?: string;
-  phone: string;
-  cnh?: string;
-  code: string;
-  available: {
-    status: "allowed" | "blocked" | "processing";
-    justifications?: Array<string>;
-  };
-}
-
 export default function Home() {
   return (
     <main className="min-h-svh relative bg-primary from-secondary to-primary flex flex-col gap-8">
